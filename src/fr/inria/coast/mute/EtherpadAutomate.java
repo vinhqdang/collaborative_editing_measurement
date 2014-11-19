@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -23,21 +24,21 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
  * @author vinh
  *
  */
-public class AutomaticMute {
+public class EtherpadAutomate {
 
 	/**
 	 * @param args
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws InterruptedException {
-		final String URL = "http://152.81.3.91:8080/doc/test2";
-		//int n_users[] = {1,2,5,10,20,30,40,50};
-		int n_users[] = {15};
+		final String URL = "http://152.81.3.91:9001/p/" + Integer.toString(new Random().nextInt());
+		int n_users[] = {1,2,5,10,20,30,40,50};
+		//int n_users[] = {15};
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <=10; type_spd++) {
-				if (type_spd != 10) continue;
 				for (int exp_id = 0; exp_id < 10; exp_id++) {
+					System.out.println ("Users: " + n_user + " type: " + type_spd + " exp: " + exp_id);
 					
 					//reader
 					WebDriver reader = new FirefoxDriver ();
@@ -45,7 +46,7 @@ public class AutomaticMute {
 					reader.get (URL);
 					WebElement readText;
 					try {
-						readText = reader.findElement(By.className("ace_content"));
+						readText = reader.findElement(By.className("innerdocbody"));
 					} catch (NoSuchElementException e) {
 						reader.quit();
 						continue;
@@ -59,7 +60,7 @@ public class AutomaticMute {
 						writers [j].manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 						writers [j].get (URL);
 						try {
-							writeTexts [j] = writers[j].findElement(By.className("ace_text-input"));
+							writeTexts [j] = writers[j].findElement(By.className("innerdocbody"));
 						} catch (NoSuchElementException e) {
 							for (int k = 0; k <= j; k++) {
 								writers [j].quit ();
