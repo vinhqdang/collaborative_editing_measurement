@@ -18,36 +18,27 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * @author vinh
  *
  */
-public class AutomaticMute {
+public class EtherpadAutomate {
 
 	/**
 	 * @param args
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws InterruptedException {
-		String BASE_URL = "http://152.81.3.91:8080";
-		int n_users[] = {50};
-		
-		int random_number = new Random().nextInt();
-		
+		final String URL = "http://152.81.3.91:9001/p/" + Integer.toString(new Random().nextInt());
+		int n_users[] = {1,2,5,10,20,30,40,50};
+		//int n_users[] = {15};
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <=10; type_spd++) {
-				for (int exp_id = 0; exp_id < 2; exp_id++) {
-					//temporary
-					//to continue broken exp
-					//if (n_user == 40 && (type_spd <= 7 || (type_spd == 8 && exp_id <= 0))) continue;
-					
-					System.out.println ("n_user:" + n_user + " type_spd: " + type_spd + " exp_id:" + exp_id);
-					
-					//generate random document
-					//to prevent a big operation history
-					String URL = BASE_URL + "/doc/" + Integer.toString (random_number) + Integer.toString(n_user) + Integer.toString(type_spd) + Integer.toString(exp_id);
+				for (int exp_id = 0; exp_id < 10; exp_id++) {
+					System.out.println ("Users: " + n_user + " type: " + type_spd + " exp: " + exp_id);
 					
 					//reader
 					WebDriver reader = new FirefoxDriver ();
@@ -55,7 +46,7 @@ public class AutomaticMute {
 					reader.get (URL);
 					WebElement readText;
 					try {
-						readText = reader.findElement(By.className("ace_content"));
+						readText = reader.findElement(By.className("innerdocbody"));
 					} catch (NoSuchElementException e) {
 						reader.quit();
 						continue;
@@ -69,7 +60,7 @@ public class AutomaticMute {
 						writers [j].manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 						writers [j].get (URL);
 						try {
-							writeTexts [j] = writers[j].findElement(By.className("ace_text-input"));
+							writeTexts [j] = writers[j].findElement(By.className("innerdocbody"));
 						} catch (NoSuchElementException e) {
 							for (int k = 0; k <= j; k++) {
 								writers [j].quit ();
@@ -117,8 +108,6 @@ public class AutomaticMute {
 					
 					reader.quit ();
 					for (int j = 0; j < n_user; j++) writers[j].quit();
-					
-					Thread.sleep (30000); 
 				}
 			}	
 		}
