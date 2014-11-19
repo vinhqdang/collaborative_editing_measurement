@@ -31,7 +31,7 @@ public class DummyWriter extends Thread
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				//e1.printStackTrace();
-				System.out.println ("Thread " + id + " quit");
+				//System.out.println ("Thread " + id + " quit");
 				return;
 			}
 		}
