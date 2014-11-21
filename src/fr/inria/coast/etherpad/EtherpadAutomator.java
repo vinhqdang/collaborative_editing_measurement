@@ -18,6 +18,7 @@ public class EtherpadAutomator extends CollaborativeAutomator {
 		this.reader = new EtherpadReader(n_user, type_spd, DOC_URL, exp_id);
 		this.writer = new EtherpadWriter(n_user, type_spd, DOC_URL, exp_id);
 		if (this.n_user > 1) {
+			this.dummies = new EtherpadDummyWriter [n_user - 1];
 			for (int i = 0; i < n_user - 1; i++) {
 				this.dummies [i] = new EtherpadDummyWriter (n_user, type_spd, DOC_URL, exp_id);
 			}

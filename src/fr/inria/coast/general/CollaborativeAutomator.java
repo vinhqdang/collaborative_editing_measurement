@@ -26,7 +26,7 @@ public class CollaborativeAutomator {
 	public void run () {
 		//start dummy writer if needed
 		if (n_user > 1) {
-			for (int i = 0; i <= n_user - 1; i++) {
+			for (int i = 0; i < n_user - 1; i++) {
 				dummies [i].start();
 			}
 		}
@@ -53,6 +53,7 @@ public class CollaborativeAutomator {
 			System.out.println("Interruped while waiting the writer finish");
 			e.printStackTrace();
 		}
+		
 		//stop dummy threads if needed
 		if (n_user > 1) {
 			for (int i = 0; i < n_user - 1; i++) {

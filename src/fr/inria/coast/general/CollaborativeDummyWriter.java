@@ -20,7 +20,8 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 			try {
 				Thread.sleep(delay);
 			} catch (InterruptedException e1) {
-				System.out.println("Interruped while writing dummy text");
+				//do not need to handle because interrupt means main writing and reading thread finish
+				//System.out.println("Interruped while writing dummy text");
 				return;
 			}
 		}
