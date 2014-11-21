@@ -30,7 +30,7 @@ public class Main {
 					automator. run();
 					try {
 						System.gc();
-						Thread.sleep(60000);
+						Thread.sleep(45000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						System.out.println("Interrupted while sleeping in main thread");
