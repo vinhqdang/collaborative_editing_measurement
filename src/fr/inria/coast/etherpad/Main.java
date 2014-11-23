@@ -18,10 +18,10 @@ public class Main {
 		// TODO Auto-generated method stub
 		int n_users[] = {1,2,5,10,20,30,40,50};
 		
-		// TODO fill the last experinmental information here
+		// TODO fill the last experimental information here
 		int last_user = 20;
-		int last_type = 7;
-		int last_exp = 5;
+		int last_type = 0;
+		int last_exp = 0;
 
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];
