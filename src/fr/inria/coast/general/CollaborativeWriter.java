@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.SessionNotFoundException;
 
 /**
  * @author "Quang-Vinh DANG"
@@ -79,14 +80,18 @@ public class CollaborativeWriter extends Thread {
 			System.out.println ("Error while writing the write time");
 			e.printStackTrace();
 		}
-		if (!driver.toString().contains("null")) {
+		try {
 			driver.quit ();
+		} catch (SessionNotFoundException e) {
+			System.out.println("Writer already quit");
 		}
 	}
 	
 	public void cancel () {
-		if (!driver.toString().contains("null")) {
+		try {
 			driver.quit ();
+		} catch (SessionNotFoundException e) {
+			System.out.println("Writer already quit");
 		}
 		interrupt();
 	}

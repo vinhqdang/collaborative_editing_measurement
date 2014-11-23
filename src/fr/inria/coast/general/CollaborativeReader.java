@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.SessionNotFoundException;
 
 /**
  * @author "Quang-Vinh DANG"
@@ -73,8 +74,10 @@ public class CollaborativeReader extends Thread {
 					System.out.println("Error while writing readTime");;
 					e.printStackTrace();
 				}
-				if (!driver.toString().contains("null")) {
+				try {
 					driver.quit ();
+				} catch (SessionNotFoundException e) {
+					System.out.println("Reader already quit");
 				}
 				return;
 			}
@@ -93,8 +96,10 @@ public class CollaborativeReader extends Thread {
 	}
 
 	public void cancel () {
-		if (!driver.toString().contains("null")) {
+		try {
 			driver.quit ();
+		} catch (SessionNotFoundException e) {
+			System.out.println("Reader already quit");
 		}
 		interrupt();
 	}
