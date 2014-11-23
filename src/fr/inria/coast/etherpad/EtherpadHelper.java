@@ -46,6 +46,7 @@ public class EtherpadHelper {
 			innerDocBodyFrame = driver.findElement(By.id ("innerdocbody"));
 		} catch (NoSuchElementException e) {
 			System.out.println("Error: innerdocbody");
+			innerDocBodyFrame = null;
 			//e.printStackTrace();
 		} catch (NoSuchFrameException e) {
 			System.out.println("Cannot switch to frame: innerdocbody");
