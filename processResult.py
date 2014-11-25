@@ -1,5 +1,4 @@
 import sys
-import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
 	file_name = sys.argv [1]
@@ -64,7 +63,7 @@ if __name__ == "__main__":
 	file.close ()
 
 	#write the result
-	file = open ("getResult.txt", "w")
+	file = open (sys.argv[2], "w")
 	us = [1, 2, 5, 10, 20, 30, 40, 50]
 	#print len (records)
 	file.write ("user speed delay\n")
