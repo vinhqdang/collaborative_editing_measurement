@@ -39,14 +39,10 @@ public class CollaborativeReader extends Thread {
 		this.type_spd = type_spd;
 		this.docURL = DOC_URL;
 		this.exp_id = exp_id;
+		this.e = null;
 
 		readTime = new long [CollaborativeAutomator.TEXT_SIZE];
 		getChar = new boolean [CollaborativeAutomator.TEXT_SIZE];
-
-		//load Google Docs document
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get(docURL);
 	}
 
 	@Override

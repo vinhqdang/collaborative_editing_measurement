@@ -64,11 +64,12 @@ public class Reader extends Thread {
 				return;
 			}
 			String content = e.getText();
+			long currentTime = System.currentTimeMillis();
 			for (int i = 0; i < 10; i++) {
 				if (getChar[i] == false) {
 					String findText = "00" + Integer.toString(i);
 					if (content.indexOf(findText) >= 0) {
-						readTime [i] = System.currentTimeMillis();
+						readTime [i] = currentTime;
 						getChar [i] = true;
 						counter += 1;
 					}

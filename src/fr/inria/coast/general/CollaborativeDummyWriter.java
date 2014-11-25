@@ -17,6 +17,7 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 		super(n_user, type_spd, DOC_URL, exp_id);
 		// TODO Auto-generated constructor stub
 		shouldWrite = true;
+		this.e = null;
 	}
 	public void run () {
 		while (shouldWrite) {

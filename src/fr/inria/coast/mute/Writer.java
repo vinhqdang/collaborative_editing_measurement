@@ -32,8 +32,8 @@ public class Writer extends Thread {
 	@Override
 	public void run () {
 		for (int i = 0; i < 10; i++) {
-			e.sendKeys("00" + Integer.toString(i) + "x");
 			writeTime[i] = System.currentTimeMillis();
+			e.sendKeys("00" + Integer.toString(i) + "x");
 			try {
 				sleep(delay);
 			} catch (InterruptedException e1) {

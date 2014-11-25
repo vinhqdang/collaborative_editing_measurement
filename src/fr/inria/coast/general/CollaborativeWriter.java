@@ -40,13 +40,9 @@ public class CollaborativeWriter extends Thread {
 		this.delay = 1000 / this.type_spd;
 		this.docURL = DOC_URL;
 		this.exp_id = exp_id;
+		this.e = null;
 
 		writeTime = new long [CollaborativeAutomator.TEXT_SIZE];
-
-		//load Google Docs document
-		this.driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get(docURL);
 	}
 	
 	@Override
