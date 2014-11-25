@@ -52,8 +52,8 @@ public class CollaborativeWriter extends Thread {
 	@Override
 	public void run () {
 		for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
-			e.sendKeys(String.format ("%03d", i) + "x");
 			writeTime[i] = System.currentTimeMillis();
+			e.sendKeys(String.format ("%03d", i) + "x");
 			try {
 				sleep(delay);
 			} catch (InterruptedException e1) {
