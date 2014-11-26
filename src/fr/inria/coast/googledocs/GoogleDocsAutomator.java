@@ -19,7 +19,7 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 		this.reader = new GoogleDocsReader(n_user, type_spd, DOC_URL, exp_id);
 		this.writer = new GoogleDocsWriter(n_user, type_spd, DOC_URL, exp_id);
 		if (this.n_user > 1) {
-			this.dummies = new MUTEDummyWriter [n_user - 1];
+			this.dummies = new GoogleDocsDummyWriter [n_user - 1];
 			for (int i = 0; i < n_user - 1; i++) {
 				this.dummies [i] = new GoogleDocsDummyWriter(n_user, type_spd, DOC_URL, exp_id) ;
 			}
