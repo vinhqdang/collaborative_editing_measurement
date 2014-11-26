@@ -6,6 +6,7 @@ package fr.inria.coast.googledocs;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import fr.inria.coast.general.CollaborativeWriter;
@@ -25,6 +26,13 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 			driver.get (DOC_URL);
 			e = driver.findElement(By.className("docs-texteventtarget-iframe"));
 		}
+	}
+	
+	@Override
+	public void cancel () {
+		e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+		e.sendKeys(Keys.DELETE);
+		super.cancel();
 	}
 
 }
