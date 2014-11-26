@@ -79,9 +79,19 @@ public class CollaborativeWriter extends Thread {
 		}
 
 		try {
+			//clear the content
+			e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+			e.sendKeys(Keys.DELETE);
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				System.out.println("Interrupted while waiting to clear content");
+			}
 			driver.quit ();
 		} catch (SessionNotFoundException e) {
 			System.out.println("Writer already quit");
+		} catch (Exception e) {
+			//TODO add exception handler
 		}
 	}
 
@@ -89,8 +99,12 @@ public class CollaborativeWriter extends Thread {
 		//stop writing
 		if (counter < CollaborativeAutomator.TEXT_SIZE - 1) counter = CollaborativeAutomator.TEXT_SIZE - 1;
 		//clear the content
-		e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
-		e.sendKeys(Keys.DELETE);
+		try {
+			e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+			e.sendKeys(Keys.DELETE);
+		} catch (SessionNotFoundException e) {
+			System.out.println("Writer already quit");
+		}
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
@@ -100,6 +114,9 @@ public class CollaborativeWriter extends Thread {
 			driver.quit ();
 		} catch (SessionNotFoundException e) {
 			System.out.println("Writer already quit");
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Quit writer");
 		}
 		interrupt();
 	}

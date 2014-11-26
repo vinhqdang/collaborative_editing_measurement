@@ -4,6 +4,7 @@
 package fr.inria.coast.general;
 
 import org.openqa.selenium.remote.SessionNotFoundException;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 
 /**
  * @author "Quang-Vinh DANG"
@@ -38,6 +39,10 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 			driver.quit ();
 		} catch (SessionNotFoundException e) {
 			System.out.println("Dummy Writer already quit");
+		} catch (UnreachableBrowserException e) {
+			System.out.println("Unreachable Browser expcetion at Dummy Writer");
+		} catch (Exception e) {
+			System.out.println("General exception at Dummy Writer");
 		}
 		interrupt();
 	}
