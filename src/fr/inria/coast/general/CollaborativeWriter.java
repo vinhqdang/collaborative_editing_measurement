@@ -48,9 +48,9 @@ public class CollaborativeWriter extends Thread {
 
 	@Override
 	public void run () {
-		for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
-			writeTime[i] = System.currentTimeMillis();
-			e.sendKeys(String.format ("%03d", i) + "x");
+		for (counter = 0; counter < CollaborativeAutomator.TEXT_SIZE; counter++) {
+			writeTime[counter] = System.currentTimeMillis();
+			e.sendKeys(String.format ("%03d", counter) + "x");
 			try {
 				sleep(delay);
 			} catch (InterruptedException e1) {
@@ -86,6 +86,8 @@ public class CollaborativeWriter extends Thread {
 	}
 
 	public void cancel () {
+		//stop writing
+		if (counter < CollaborativeAutomator.TEXT_SIZE - 1) counter = CollaborativeAutomator.TEXT_SIZE - 1;
 		//clear the content
 		e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
 		e.sendKeys(Keys.DELETE);
