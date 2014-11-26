@@ -11,19 +11,31 @@ if __name__ == "__main__":
 	
 	test_cases = [[0 for x in xrange(5)] for x in xrange (100)]
 	counter = 0
+	last_n_user = 0
+	last_type_spd = 0
+	last_exp_id = 0
+
 	for line in lines:
-		if (counter >= 5 and ('***' in line or '---' in line)):
-			test_cases = [[0 for x in xrange(5)] for x in xrange (100)]
-			counter = 0
+		if ('***' in line or '---' in line):
+			continue
 
 		ls = line.split ()
 
+		#the same
+		n_user = int (ls[1])
+		type_spd = int (ls[2])
+		exp_id = int (ls[3])
+		string = int (ls[4])
+
+		if (last_n_user != n_user or last_type_spd != type_spd or last_exp_id != exp_id):
+			test_cases = [[0 for x in xrange(5)] for x in xrange (100)]
+			last_n_user = n_user
+			last_type_spd = type_spd
+			last_exp_id = exp_id
+
 		#found writing record
 		if (ls[0] == 'W'):
-			n_user = int (ls[1])
-			type_spd = int (ls[2])
-			exp_id = int (ls[3])
-			string = int (ls[4])
+			
 			w_time = int (ls[5])
 
 			test_cases[string][0] = n_user
@@ -32,27 +44,24 @@ if __name__ == "__main__":
 			test_cases[string][4] = w_time
 
 			#add to record
-			if (test_cases[string][3] != 0):
+			if (test_cases[string][3] != 0 and test_cases[string][4] != 0):
 				res = list ()
 				res.append (type_spd)
 				res.append (test_cases[string][3] - w_time)
 				records[n_user - 1].append (res)
-				counter += 1
+
 		#found reading record
 		if (ls[0] == 'R'):
-			n_user = int (ls[1])
-			type_spd = int (ls[2])
-			exp_id = int (ls[3])
-			string = int (ls[4])
 			r_time = int (ls[5])
 
+			test_cases[string][3] = r_time
+
 			#add to record
-			if (test_cases[string][4] != 0):
+			if (test_cases[string][4] != 0 and r_time != 0):
 				res = list ()
 				res.append (type_spd)
 				res.append (r_time - test_cases[string][4])
 				records[n_user - 1].append (res)
-				counter += 1
 
 			#if (test_cases[string][0] == n_user && test_cases[string[1] == type_spd && test_cases[string[2]] = exp_id):
 			test_cases[string][3] = r_time
