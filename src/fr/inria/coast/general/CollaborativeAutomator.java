@@ -38,11 +38,19 @@ public class CollaborativeAutomator {
 		//wait for reader finish
 		//i.e, read all modification
 		try {
-			reader.join();
+			reader.join(120000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Interrupted while waiting the reader finish");
 			e.printStackTrace();
+			//if reader stops, finish all other thread and start a new loop
+			writer.cancel();
+			if (n_user > 1) {
+				for (int i = 0; i < n_user - 1; i++) {
+					dummies [i].cancel();
+				}
+			}
+			return;
 		}
 
 		//after reader finish, stop writer

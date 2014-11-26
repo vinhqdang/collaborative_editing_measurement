@@ -19,8 +19,8 @@ public class MUTEReader extends CollaborativeReader {
 	public MUTEReader(int n_user, int type_spd, String DOC_URL, int exp_id) {
 		super(n_user, type_spd, DOC_URL, exp_id);
 		// TODO Auto-generated constructor stub
+		driver = new FirefoxDriver();
 		while (this.e == null) {
-			driver = new FirefoxDriver();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get(DOC_URL);
 			this.e = driver.findElement(By.className("ace_content"));

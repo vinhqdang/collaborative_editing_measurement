@@ -31,7 +31,7 @@ public class AutomaticMute {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		String BASE_URL = "http://152.81.3.91:8080";
-		int n_users[] = {50};
+		int n_users[] = {20,30,40,50};
 		
 		int random_number = new Random().nextInt();
 		
