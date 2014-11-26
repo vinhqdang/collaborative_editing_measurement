@@ -53,20 +53,14 @@ public class CollaborativeAutomator {
 			return;
 		}
 
-		//after reader finish, stop writer
-		try {
-			writer.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Interruped while waiting the writer finish");
-			e.printStackTrace();
-		}
-		
 		//stop dummy threads if needed
 		if (n_user > 1) {
 			for (int i = 0; i < n_user - 1; i++) {
 				dummies [i].cancel();
 			}
 		}
+
+		//after reader finish, stop writer
+		writer.cancel();
 	}
 }

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -44,7 +45,7 @@ public class CollaborativeWriter extends Thread {
 
 		writeTime = new long [CollaborativeAutomator.TEXT_SIZE];
 	}
-	
+
 	@Override
 	public void run () {
 		for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
@@ -76,14 +77,23 @@ public class CollaborativeWriter extends Thread {
 			System.out.println ("Error while writing the write time");
 			e.printStackTrace();
 		}
+
 		try {
 			driver.quit ();
 		} catch (SessionNotFoundException e) {
 			System.out.println("Writer already quit");
 		}
 	}
-	
+
 	public void cancel () {
+		//clear the content
+		e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+		e.sendKeys(Keys.DELETE);
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			System.out.println("Interrupted while waiting to clear content");
+		}
 		try {
 			driver.quit ();
 		} catch (SessionNotFoundException e) {

@@ -30,8 +30,6 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 	
 	@Override
 	public void cancel () {
-		e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
-		e.sendKeys(Keys.DELETE);
 		super.cancel();
 	}
 
