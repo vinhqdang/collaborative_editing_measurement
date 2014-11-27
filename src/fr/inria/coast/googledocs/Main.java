@@ -21,14 +21,16 @@ public class Main {
 		int n_users[] = {1,2,5,10,20,30,40,50};
 
 		// TODO fill the last experimental information here
-		int last_user = 5;
-		int last_type = 4;
-		int last_exp = 2;
+		int last_user = 20;
+		int last_type = 7;
+		int last_exp = 4;
 
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
 				for (int exp_id = 1; exp_id <= 5; exp_id += 1) {
+					//only test with type speed 1 with 40 and 50 users
+					if (n_user >= 40 && type_spd != 1) continue;
 					//continue from last time
 					if (n_user < last_user || (n_user == last_user && type_spd < last_type || (type_spd == last_type && exp_id <= last_exp))) continue;
 
@@ -44,7 +46,7 @@ public class Main {
 						if (exp_id == 5) {
 							Thread.sleep(300000);
 						} else {
-							Thread.sleep(45000);
+							Thread.sleep(300000);
 						}
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -64,6 +66,8 @@ public class Main {
 			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
 				for (int exp_id = 1; exp_id <= 5; exp_id += 1) {
+					//only test with type speed 1 with 40 and 50 users
+					if (n_user >= 40 && type_spd != 1) continue;
 					//continue from last time
 					if (n_user < last_user || (n_user == last_user && type_spd < last_type || (type_spd == last_type && exp_id <= last_exp))) continue;
 
@@ -76,7 +80,7 @@ public class Main {
 					try {
 						System.out.println("Finished");
 						System.gc();
-						Thread.sleep(45000);
+						Thread.sleep(60000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						System.out.println("Interrupted while sleeping in main thread");

@@ -31,8 +31,10 @@ public class CollaborativeAutomator {
 			}
 		}
 		//start reader
+		reader.setPriority(Thread.MAX_PRIORITY);
 		reader.start ();
 		//start writer
+		writer.setPriority(Thread.MAX_PRIORITY - 1);
 		writer.start();
 
 		//wait for reader finish
