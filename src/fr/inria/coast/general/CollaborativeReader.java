@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -77,7 +78,14 @@ public class CollaborativeReader extends Thread {
 				}
 				return;
 			}
-			String content = e.getText();
+			String content = null;
+			try {
+				content = e.getText();
+			} catch (StaleElementReferenceException e) {
+				System.out.println("StaleElementReferenceException at Reader");
+				e.printStackTrace();
+				this.cancel();
+			}
 			long currentTime = System.currentTimeMillis();
 			for (int i = 0; i < 10; i++) {
 				if (getChar[i] == false) {
