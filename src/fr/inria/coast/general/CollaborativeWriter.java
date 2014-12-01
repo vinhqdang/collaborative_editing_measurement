@@ -80,6 +80,7 @@ public class CollaborativeWriter extends Thread {
 
 		try {
 			//clear the content
+			System.out.println("Clear content");
 			e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
 			e.sendKeys(Keys.DELETE);
 			try {
