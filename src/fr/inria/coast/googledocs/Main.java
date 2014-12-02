@@ -22,9 +22,9 @@ public class Main {
 		int n_users[] = {11,13,15,17,19};
 
 		// TODO fill the last experimental information here
-		int last_user = 0;
-		int last_type = 0;
-		int last_exp = 0;
+		int last_user = 11;
+		int last_type = 4;
+		int last_exp = 1;
 
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];
@@ -40,17 +40,17 @@ public class Main {
 
 					System.out.println ("Running Google Docs: " + n_user + " " + type_spd + " " + exp_id);
 
-					String DOC_URL = "https://docs.google.com/document/d/1UmEc42z6bAD95fvdU5zTdv4ODcgu3LDpC9lDNJgjzGg/edit?usp=sharing";
+					String DOC_URL = "https://docs.google.com/document/d/18zd6xh4uKT8NTaPoRndhONkJmT2Mo6-SLl1kYOp3G24/edit?usp=sharing";
 
 					GoogleDocsAutomator automator = new GoogleDocsAutomator(n_user, type_spd, exp_id, DOC_URL, 10, "googleDocs.txt");
 					automator. run();
 					try {
-						System.out.println("Finished");
+						System.out.println("Finished Google: " + n_user + " " + type_spd + " " + exp_id);
 						System.gc();
 						if (exp_id == 5) {
-							Thread.sleep(300000);
+							Thread.sleep(150000);
 						} else {
-							Thread.sleep(300000);
+							Thread.sleep(150000);
 						}
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
