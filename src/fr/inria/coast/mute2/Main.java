@@ -27,7 +27,7 @@ public class Main {
 			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
 				if (type_spd % 2 != 0 && type_spd != 1) continue;
-				if (n_user >= 40 && type_spd != 1) continue;
+				//if (n_user >= 40 && type_spd != 1) continue;
 				for (int exp_id = 1; exp_id <= 3; exp_id += 1) {
 					//continue from last time
 					if (n_user < last_user || (n_user == last_user && type_spd < last_type || (n_user == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
@@ -36,10 +36,10 @@ public class Main {
 
 					String DOC_URL = "http://152.81.3.91:8080/doc/" +UUID.randomUUID().toString();
 
-					MUTEAutomator automator = new MUTEAutomator(n_user, type_spd, exp_id, DOC_URL, 10, "mute.txt");
+					MUTEAutomator automator = new MUTEAutomator(n_user, type_spd, exp_id, DOC_URL, 10, "mute_no_db.txt");
 					automator. run();
 					try {
-						System.out.println("Finished");
+						System.out.println("Finished MUTE: " + n_user + " " + type_spd + " " + exp_id);
 						System.gc();
 						Thread.sleep(45000);
 					} catch (InterruptedException e) {
