@@ -45,10 +45,12 @@ if __name__ == "__main__":
 
 			#add to record
 			if (test_cases[string][3] != 0 and test_cases[string][4] != 0):
-				res = list ()
-				res.append (type_spd)
-				res.append (test_cases[string][3] - w_time)
-				records[n_user - 1].append (res)
+				_delay = test_cases[string][3] - w_time
+				if (_delay > 0):
+					res = list ()
+					res.append (type_spd)
+					res.append (_delay)
+					records[n_user - 1].append (res)
 
 		#found reading record
 		if (ls[0] == 'R'):
@@ -58,10 +60,12 @@ if __name__ == "__main__":
 
 			#add to record
 			if (test_cases[string][4] != 0 and r_time != 0):
-				res = list ()
-				res.append (type_spd)
-				res.append (r_time - test_cases[string][4])
-				records[n_user - 1].append (res)
+				_delay = r_time - test_cases[string][4]
+				if (_delay > 0):
+					res = list ()
+					res.append (type_spd)
+					res.append (_delay)
+					records[n_user - 1].append (res)
 
 			#if (test_cases[string][0] == n_user && test_cases[string[1] == type_spd && test_cases[string[2]] = exp_id):
 			test_cases[string][3] = r_time
