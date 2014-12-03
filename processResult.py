@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
 	#write the result
 	file = open (sys.argv[2], "w")
-	us = [1, 2, 5, 10, 20, 30, 40, 50]
+	us = range (1, 51)
 	#print len (records)
 	file.write ("user speed delay\n")
 	for u in us:
