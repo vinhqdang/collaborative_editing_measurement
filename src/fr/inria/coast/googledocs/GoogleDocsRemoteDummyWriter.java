@@ -3,37 +3,42 @@
  */
 package fr.inria.coast.googledocs;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-import fr.inria.coast.general.CollaborativeDummyWriter;
+import fr.inria.coast.general.CollaborativeRemoteDummyWriter;
 
 /**
  * @author qdang
  *
  */
-public class GoogleDocsDummyWriter extends CollaborativeDummyWriter {
-	public GoogleDocsDummyWriter(int n_user, int type_spd, String DOC_URL,
-			int exp_id) {
-		super(n_user, type_spd, DOC_URL, exp_id);
-		// TODO Auto-generated constructor stub
-		this.driver = new ChromeDriver();
-		while (this.e == null) {
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.get(DOC_URL);
-			this.e = driver.findElement(By.className("docs-texteventtarget-iframe"));
+public class GoogleDocsRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
+	char c = (char) ('a' + new Random ().nextInt(15));
+	public GoogleDocsRemoteDummyWriter(int n_user, int type_spd,
+			String DOC_URL, int exp_id, String serverAddr) {
+		super(n_user, type_spd, DOC_URL, exp_id, serverAddr);
+		try {
+			this.remoteDriver = new RemoteWebDriver(new URL ("http://" + serverAddr + ":4444/wd/hub"), capabilities);
+		} catch (MalformedURLException e) {
+			System.out.println("Cannot get remoted web driver at URL: " + serverAddr);
 		}
+		
+		remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		remoteDriver.get(DOC_URL);
+		this.e = remoteDriver.findElement(By.className("docs-texteventtarget-iframe"));
 	}
 	
 	@Override
 	public void run () {
+		this.e.click();
 		while (shouldWrite) {
-			this.e.sendKeys("a");
-			/*
+			
 			int nextStep = new Random().nextInt () / 100;
 			if (nextStep % 10 == 0) {
 				this.e.sendKeys(Keys.DELETE);
@@ -48,7 +53,7 @@ public class GoogleDocsDummyWriter extends CollaborativeDummyWriter {
 				}
 				this.e.sendKeys("" + c);
 			}
-			*/
+			
 			try {
 				Thread.sleep(delay);
 			} catch (InterruptedException e1) {

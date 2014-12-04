@@ -3,6 +3,9 @@
  */
 package fr.inria.coast.general;
 
+import java.util.Random;
+
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.remote.SessionNotFoundException;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 
@@ -11,7 +14,7 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
  *
  */
 public class CollaborativeDummyWriter extends CollaborativeWriter {
-	boolean shouldWrite;
+	public boolean shouldWrite;
 
 	public CollaborativeDummyWriter(int n_user, int type_spd, String DOC_URL,
 			int exp_id) {
@@ -20,9 +23,10 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 		shouldWrite = true;
 		this.e = null;
 	}
+	char c = (char) ('a' + new Random ().nextInt(10));
 	public void run () {
 		while (shouldWrite) {
-			this.e.sendKeys("a");
+			dummyType ();
 			try {
 				Thread.sleep(delay);
 			} catch (InterruptedException e1) {
@@ -45,5 +49,24 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 			System.out.println("General exception at Dummy Writer");
 		}
 		interrupt();
+	}
+	
+	public void dummyType () {
+		
+		int nextStep = new Random().nextInt () % 10;
+		if (nextStep % 5 == 0) {
+			this.e.sendKeys(Keys.DELETE);
+		} else if (nextStep > 0) {
+			for (int i = 0; i < nextStep; i++) {
+				this.e.sendKeys(Keys.RIGHT);
+			}
+			this.e.sendKeys("" + c);
+		} else if (nextStep < 0) {
+			for (int i = nextStep; i < 0; i++) {
+				this.e.sendKeys(Keys.LEFT);
+			}
+			this.e.sendKeys("" + c);
+		}
+		
 	}
 }

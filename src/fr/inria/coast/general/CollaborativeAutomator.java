@@ -8,10 +8,18 @@ public class CollaborativeAutomator {
 	protected CollaborativeWriter writer;
 	protected CollaborativeReader reader;
 	protected CollaborativeDummyWriter dummies[];
+	protected CollaborativeRemoteDummyWriter remoteDummies[];
 	int type_spd;
 	protected int n_user;
 	int exp_id; //experimence ID
 	String docURL;
+	
+	//limit number of thread can run in a host
+	//if more, need to switch to remote driver
+	protected int THRESHOLD = 30;
+	//number of thread running in local
+	//other will run remotely
+	protected int n_LocalThread;
 
 	public CollaborativeAutomator (int n_user, int type_spd, int exp_id, String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
 		this.n_user = n_user;
@@ -20,14 +28,22 @@ public class CollaborativeAutomator {
 		this.docURL = DOC_URL;
 		CollaborativeAutomator.TEXT_SIZE = TEXT_SIZE;
 		CollaborativeAutomator.RESULT_FILE = RESULT_FILE;
+		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
 		// TODO need to initialize reader and writer at subclass
 	}
 
 	public void run () {
 		//start dummy writer if needed
 		if (n_user > 1) {
-			for (int i = 0; i < n_user - 1; i++) {
+			//start local dummy writer
+			for (int i = 0; i < n_LocalThread - 1; i++) {
 				dummies [i].start();
+			}
+			
+			if (n_user > THRESHOLD) {
+				for (int i = 0; i < n_user - THRESHOLD; i++) {
+					remoteDummies[i].start();
+				}
 			}
 		}
 		//start reader
@@ -51,14 +67,24 @@ public class CollaborativeAutomator {
 				for (int i = 0; i < n_user - 1; i++) {
 					dummies [i].cancel();
 				}
+				if (n_user > THRESHOLD) {
+					for (int i = 0; i < n_user - THRESHOLD; i++) {
+						remoteDummies[i].cancel();
+					}
+				}
 			}
 			return;
 		}
 
 		//stop dummy threads if needed
 		if (n_user > 1) {
-			for (int i = 0; i < n_user - 1; i++) {
+			for (int i = 0; i < n_LocalThread - 1; i++) {
 				dummies [i].cancel();
+			}
+			if (n_user > THRESHOLD) {
+				for (int i = 0; i < n_user - THRESHOLD; i++) {
+					remoteDummies[i].cancel();
+				}
 			}
 		}
 

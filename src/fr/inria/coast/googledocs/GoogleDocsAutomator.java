@@ -4,7 +4,6 @@
 package fr.inria.coast.googledocs;
 
 import fr.inria.coast.general.CollaborativeAutomator;
-import fr.inria.coast.mute2.MUTEDummyWriter;
 
 /**
  * @author qdang
@@ -19,9 +18,15 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 		this.reader = new GoogleDocsReader(n_user, type_spd, DOC_URL, exp_id);
 		this.writer = new GoogleDocsWriter(n_user, type_spd, DOC_URL, exp_id);
 		if (this.n_user > 1) {
-			this.dummies = new GoogleDocsDummyWriter [n_user - 1];
-			for (int i = 0; i < n_user - 1; i++) {
+			this.dummies = new GoogleDocsDummyWriter [n_LocalThread - 1];
+			for (int i = 0; i < n_LocalThread - 1; i++) {
 				this.dummies [i] = new GoogleDocsDummyWriter(n_user, type_spd, DOC_URL, exp_id) ;
+			}
+			if (n_user > THRESHOLD) {
+				this.remoteDummies = new GoogleDocsRemoteDummyWriter [n_user - THRESHOLD];
+				for (int i = 0; i < n_user - THRESHOLD; i++) {
+					this.remoteDummies [i] = new GoogleDocsRemoteDummyWriter(n_user, type_spd, DOC_URL, exp_id, "152.81.2.28");
+				}
 			}
 		}
 	}

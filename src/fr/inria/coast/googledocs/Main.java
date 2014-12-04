@@ -18,13 +18,13 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//int n_users[] = {1,2,5,10,20,30,40,50};
-		int n_users[] = {11,13,15,17,19,23,25,27,35,40,45,50};
+		//int n_users[] = {1,2,5,10,15,20,25,30,40,50};
+		int n_users[] = {5};
 
 		// TODO fill the last experimental information here
-		int last_user = 13;
-		int last_type = 10;
-		int last_exp = 2;
+		int last_user = 0;
+		int last_type = 0;
+		int last_exp = 0;
 
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];
@@ -46,7 +46,7 @@ public class Main {
 					DOC_URLS[1] = "https://docs.google.com/document/d/1jraa1yiFzROSKP6SruMxuJvE4sbuGcmv9gnNOGGb2xU/edit?usp=sharing";
 					DOC_URLS[2] = "https://docs.google.com/document/d/1_5WbMAy1DxZUop2-KE3vR0pNii4STZ_E_U6XOmK2CME/edit?usp=sharing";
 
-					GoogleDocsAutomator automator = new GoogleDocsAutomator(n_user, type_spd, exp_id, DOC_URLS[exp_id%DOC_URLS.length], 10, "googleDocs.txt");
+					GoogleDocsAutomator automator = new GoogleDocsAutomator(n_user, type_spd, exp_id, DOC_URLS[exp_id%DOC_URLS.length], 10, "google_with_deletion.txt");
 					automator. run();
 					try {
 						System.out.println("Finished Google: " + n_user + " " + type_spd + " " + exp_id);

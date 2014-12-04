@@ -18,11 +18,11 @@ public class Main {
 		int n_users[] = {1,2,5,10,20,30,40,50};
 
 		// TODO fill the last experimental information here
-		int last_user = 40;
+		int last_user = 30;
 		int last_type = 1;
-		int last_exp = 5;
+		int last_exp = 1;
 		
-		int doc_name = 1730;
+		int doc_name = 1800;
 
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];
@@ -51,8 +51,5 @@ public class Main {
 				}
 			}
 		}
-
-		
 	}
-
 }

@@ -20,7 +20,7 @@ public class Main {
 
 		// TODO fill the last experimental information here
 		int last_user = 30;
-		int last_type = 10;
+		int last_type = 2;
 		int last_exp = 3;
 
 		for (int i = 0; i < n_users.length; i++) {
@@ -36,7 +36,7 @@ public class Main {
 
 					String DOC_URL = "http://152.81.3.91:8080/doc/" +UUID.randomUUID().toString();
 
-					MUTEAutomator automator = new MUTEAutomator(n_user, type_spd, exp_id, DOC_URL, 10, "mute_no_db.txt");
+					MUTEAutomator automator = new MUTEAutomator(n_user, type_spd, exp_id, DOC_URL, 10, "mute_with_deletion.txt");
 					automator. run();
 					try {
 						System.out.println("Finished MUTE: " + n_user + " " + type_spd + " " + exp_id);

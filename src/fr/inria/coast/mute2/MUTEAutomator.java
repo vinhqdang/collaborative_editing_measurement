@@ -19,8 +19,14 @@ public class MUTEAutomator extends CollaborativeAutomator {
 		this.writer = new MUTEWriter(n_user, type_spd, DOC_URL, exp_id);
 		if (this.n_user > 1) {
 			this.dummies = new MUTEDummyWriter [n_user - 1];
-			for (int i = 0; i < n_user - 1; i++) {
+			for (int i = 0; i < n_LocalThread - 1; i++) {
 				this.dummies [i] = new MUTEDummyWriter (n_user, type_spd, DOC_URL, exp_id);
+			}
+			if (n_user > THRESHOLD) {
+				this.remoteDummies = new MUTERemoteDummyWriter [n_user - THRESHOLD];
+				for (int i = 0; i < n_user - THRESHOLD; i++) {
+					this.remoteDummies [i] = new MUTERemoteDummyWriter(n_user, type_spd, DOC_URL, exp_id, "152.81.2.28");
+				}
 			}
 		}
 	}

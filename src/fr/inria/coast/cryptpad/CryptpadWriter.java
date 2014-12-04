@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import fr.inria.coast.general.CollaborativeAutomator;
 import fr.inria.coast.general.CollaborativeWriter;
 
 /**
@@ -25,5 +26,4 @@ public class CryptpadWriter extends CollaborativeWriter{
 			this.e = CryptpadHelper.getWebElement(driver);
 		}
 	}
-
 }
