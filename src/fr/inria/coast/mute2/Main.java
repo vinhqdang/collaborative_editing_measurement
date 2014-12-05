@@ -36,7 +36,7 @@ public class Main {
 
 					String DOC_URL = "http://152.81.3.91:8080/doc/" +UUID.randomUUID().toString();
 
-					MUTEAutomator automator = new MUTEAutomator(n_user, type_spd, exp_id, DOC_URL, 10, "mute_with_deletion.txt");
+					MUTEAutomator automator = new MUTEAutomator(n_user, type_spd, exp_id, DOC_URL, 10, "1mute_with_deletion.txt");
 					automator. run();
 					try {
 						System.out.println("Finished MUTE: " + n_user + " " + type_spd + " " + exp_id);

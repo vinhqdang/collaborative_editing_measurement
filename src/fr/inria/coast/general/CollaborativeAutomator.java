@@ -16,7 +16,10 @@ public class CollaborativeAutomator {
 	
 	//limit number of thread can run in a host
 	//if more, need to switch to remote driver
-	protected int THRESHOLD = 30;
+	protected int THRESHOLD = 20;
+	
+	//maximum number of threads run on each remote machine
+	protected int THRESHOLD_REMOTE = 15;
 	//number of thread running in local
 	//other will run remotely
 	protected int n_LocalThread;
@@ -49,6 +52,14 @@ public class CollaborativeAutomator {
 		//start reader
 		reader.setPriority(Thread.MAX_PRIORITY);
 		reader.start ();
+		
+		//wait for synchronization
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e1) {
+			System.out.println("Interrupted while waiting for synchronization before start");
+			e1.printStackTrace();
+		}
 		//start writer
 		writer.setPriority(Thread.MAX_PRIORITY - 1);
 		writer.start();
