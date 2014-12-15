@@ -3,9 +3,6 @@
  */
 package fr.inria.coast.googledocs;
 
-import java.util.UUID;
-
-import fr.inria.coast.mute2.MUTEAutomator;
 
 /**
  * @author qdang
