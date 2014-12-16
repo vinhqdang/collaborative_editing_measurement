@@ -34,6 +34,9 @@ public class CollaborativeReader extends Thread {
 	int counter;
 
 	protected WebElement e;
+	
+	//to indicate write the result to file or not
+	protected boolean didWrite = false;
 
 	public CollaborativeReader (int n_user, int type_spd, String DOC_URL, int exp_id) {
 		this.n_user = n_user;
@@ -67,6 +70,7 @@ public class CollaborativeReader extends Thread {
 						}
 					}
 					out.print("---\n");
+					didWrite = true;
 				}catch (IOException e) {
 					System.out.println("Error while writing readTime");;
 					e.printStackTrace();
@@ -102,6 +106,30 @@ public class CollaborativeReader extends Thread {
 
 	public void cancel () {
 		try {
+			if (didWrite == false) {
+				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.RESULT_FILE, true)))) {
+					for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
+						if (getChar[i] == true) {
+							out.print("R ");
+							out.print(n_user);
+							out.print(" ");
+							out.print(type_spd);
+							out.print(" ");
+							out.print(exp_id);
+							out.print(" ");
+							out.print(String.format ("%03d", i));
+							out.print(" ");
+							out.print(readTime[i]);
+							out.print("\n");
+						}
+					}
+					out.print("---\n");
+					didWrite = true;
+				}catch (IOException e) {
+					System.out.println("Error while writing readTime");;
+					e.printStackTrace();
+				}
+			}
 			driver.quit ();
 		} catch (SessionNotFoundException e) {
 			System.out.println("Reader already quit");

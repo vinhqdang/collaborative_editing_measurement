@@ -16,13 +16,21 @@ public class CollaborativeAutomator {
 	
 	//limit number of thread can run in a host
 	//if more, need to switch to remote driver
-	protected int THRESHOLD = 20;
+	protected int THRESHOLD = 5;
 	
 	//maximum number of threads run on each remote machine
 	protected int THRESHOLD_REMOTE = 15;
 	//number of thread running in local
 	//other will run remotely
 	protected int n_LocalThread;
+	
+	//remote settings
+	//from first to last: HP Z400, HP Z400, Dell Workstation Core 2 Duo
+	protected String REMOTE_ADDR[] = {"152.81.3.91","152.81.15.203","152.81.15.71","152.81.12.192"};
+	protected int REMOTE_THREAD[] = {15,15,5,10};
+	
+	//in case the number of requested exceed the preparation: this server will take care all the remaining request
+	protected final String REMOTE_LAST_ADDR = "152.81.12.192";
 
 	public CollaborativeAutomator (int n_user, int type_spd, int exp_id, String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
 		this.n_user = n_user;

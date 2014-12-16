@@ -10,7 +10,6 @@ import fr.inria.coast.general.CollaborativeAutomator;
  *
  */
 public class GoogleDocsAutomator extends CollaborativeAutomator {
-
 	public GoogleDocsAutomator(int n_user, int type_spd, int exp_id,
 			String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
 		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
@@ -25,7 +24,17 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 			if (n_user > THRESHOLD) {
 				this.remoteDummies = new GoogleDocsRemoteDummyWriter [n_user - THRESHOLD];
 				for (int i = 0; i < n_user - THRESHOLD; i++) {
-					this.remoteDummies [i] = new GoogleDocsRemoteDummyWriter(n_user, type_spd, DOC_URL, exp_id, "152.81.2.28");
+					//depends on the number of requested clients, request from different remote server
+					String remoteURL = REMOTE_LAST_ADDR;
+					int sum = 0;
+					for (int j = 0; j < REMOTE_THREAD.length; j++) {
+						sum += REMOTE_THREAD [j];
+						if (i < sum) {
+							remoteURL = REMOTE_ADDR [j];
+							break;
+						}
+					}
+					this.remoteDummies [i] = new GoogleDocsRemoteDummyWriter(n_user, type_spd, DOC_URL, exp_id, remoteURL);
 				}
 			}
 		}

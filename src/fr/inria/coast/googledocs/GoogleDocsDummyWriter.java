@@ -33,6 +33,14 @@ public class GoogleDocsDummyWriter extends CollaborativeDummyWriter {
 	public void run () {
 		while (shouldWrite) {
 			this.e.sendKeys("a");
+			int nextStep = new Random().nextInt () / 100;
+			if (nextStep % 10 == 0) {
+				int j = nextStep / 20;
+				while (j != 0) {
+					this.e.sendKeys(Keys.BACK_SPACE);
+					j--;
+				}
+			}
 			/*
 			int nextStep = new Random().nextInt () / 100;
 			if (nextStep % 10 == 0) {

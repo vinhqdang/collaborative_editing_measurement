@@ -14,36 +14,42 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//int n_users[] = {1,2,5,10,15,20,25,30,40,50};
-		int n_users[] = {5};
+		int n_users[] = {1,2,4,5,6,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
 
 		// TODO fill the last experimental information here
-		int last_user = 0;
-		int last_type = 0;
-		int last_exp = 0;
+		int last_user = 50;
+		int last_type = 1;
+		int last_exp = 5;
+		
+		String out_file = "google_with_deletion.txt";
 
 		for (int i = 0; i < n_users.length; i++) {
-			int n_user = n_users [i];
+			int n_user = n_users [n_users.length - 1 - i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
-				for (int exp_id = 1; exp_id <= 3; exp_id += 1) {
+				for (int exp_id = 1; exp_id <= 5; exp_id += 1) {
 					if (type_spd != 1 && type_spd % 2 != 0) {
 						continue;
 					}
 					//only test with type speed 1 with 40 and 50 users
 					if (n_user >= 40 && type_spd != 1) continue;
+					
+					//skip n_user = 19 && type_spd = 1 (already done)
+					if (n_user == 19 && type_spd == 1) continue;
+					
 					//continue from last time
-					if (n_user < last_user || (n_user == last_user && type_spd < last_type || (n_user == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
+					if (n_user > last_user || (n_user == last_user && type_spd < last_type || (n_user == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
 
 					System.out.println ("Running Google Docs: " + n_user + " " + type_spd + " " + exp_id);
 					
-					String DOC_URLS[] = new String[3];
+					String DOC_URLS[] = new String[5];
 
 					DOC_URLS[0] = "https://docs.google.com/document/d/18zd6xh4uKT8NTaPoRndhONkJmT2Mo6-SLl1kYOp3G24/edit?usp=sharing";
 					DOC_URLS[1] = "https://docs.google.com/document/d/1jraa1yiFzROSKP6SruMxuJvE4sbuGcmv9gnNOGGb2xU/edit?usp=sharing";
 					DOC_URLS[2] = "https://docs.google.com/document/d/1_5WbMAy1DxZUop2-KE3vR0pNii4STZ_E_U6XOmK2CME/edit?usp=sharing";
+					DOC_URLS[3] = "https://docs.google.com/document/d/11lKlnwp_EFebu8Yim1b38hkBcPtCx7sH2QsxrilvPIM/edit?usp=sharing";
+					DOC_URLS[4] = "https://docs.google.com/document/d/1eRtWpIjEJ9FFnK4YFCeNCqA1_KVB_xldTAY5CI5yy5s/edit?usp=sharing";
 
-					GoogleDocsAutomator automator = new GoogleDocsAutomator(n_user, type_spd, exp_id, DOC_URLS[exp_id%DOC_URLS.length], 10, "google_with_deletion.txt");
+					GoogleDocsAutomator automator = new GoogleDocsAutomator(n_user, type_spd, exp_id, DOC_URLS[exp_id%DOC_URLS.length], 10, out_file);
 					automator. run();
 					try {
 						System.out.println("Finished Google: " + n_user + " " + type_spd + " " + exp_id);

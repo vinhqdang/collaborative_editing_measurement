@@ -36,13 +36,19 @@ public class GoogleDocsRemoteDummyWriter extends CollaborativeRemoteDummyWriter 
 	
 	@Override
 	public void run () {
-		this.e.click();
+		//this.e.click();
 		while (shouldWrite) {
-			
+			this.e.sendKeys("" + c);
 			int nextStep = new Random().nextInt () / 100;
 			if (nextStep % 10 == 0) {
-				this.e.sendKeys(Keys.DELETE);
-			} else if (nextStep > 0) {
+				int j = nextStep / 20;
+				while (j != 0) {
+					this.e.sendKeys(Keys.BACK_SPACE);
+					j--;
+				}
+			} 
+			/*
+			else if (nextStep > 0) {
 				for (int i = 0; i < nextStep; i++) {
 					this.e.sendKeys(Keys.ARROW_RIGHT);
 				}
@@ -53,6 +59,7 @@ public class GoogleDocsRemoteDummyWriter extends CollaborativeRemoteDummyWriter 
 				}
 				this.e.sendKeys("" + c);
 			}
+			*/
 			
 			try {
 				Thread.sleep(delay);
