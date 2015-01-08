@@ -33,6 +33,10 @@ public class CollaborativeAutomator {
 	protected final String REMOTE_LAST_ADDR = "152.81.12.192";
 
 	public CollaborativeAutomator (int n_user, int type_spd, int exp_id, String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
+		if (OSValidator.isWindows()) {
+			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		}
+		
 		this.n_user = n_user;
 		this.type_spd = type_spd;
 		this.exp_id = exp_id;
@@ -40,7 +44,6 @@ public class CollaborativeAutomator {
 		CollaborativeAutomator.TEXT_SIZE = TEXT_SIZE;
 		CollaborativeAutomator.RESULT_FILE = RESULT_FILE;
 		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
-		// TODO need to initialize reader and writer at subclass
 	}
 
 	public void run () {
