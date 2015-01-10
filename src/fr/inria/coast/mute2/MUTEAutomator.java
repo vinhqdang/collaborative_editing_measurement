@@ -13,15 +13,14 @@ import fr.inria.coast.googledocs.GoogleDocsRemoteDummyWriter;
 public class MUTEAutomator extends CollaborativeAutomator {
 	
 	//redefine setting
-	protected int THRESHOLD = 15;
-	protected String REMOTE_ADDR[] = {"152.81.15.203","152.81.15.71","152.81.12.192"};
-	protected int REMOTE_THREAD[] = {25,5,5};
+	protected String REMOTE_ADDR[] = {"152.81.15.203","152.81.15.71","152.81.12.192","152.81.7.44"};
+	protected int REMOTE_THREAD[] = {15,15,20,15};
 
 	public MUTEAutomator(int n_user, int type_spd, int exp_id, String DOC_URL,
 			int TEXT_SIZE, String RESULT_FILE) {
 		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
+		THRESHOLD = 0;
 		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
-		
 		
 		this.reader = new MUTEReader(n_user, type_spd, DOC_URL, exp_id);
 		this.writer = new MUTEWriter(n_user, type_spd, DOC_URL, exp_id);

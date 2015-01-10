@@ -10,9 +10,7 @@ import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.SessionNotFoundException;
 
 import fr.inria.coast.general.CollaborativeAutomator;
 import fr.inria.coast.general.CollaborativeWriter;

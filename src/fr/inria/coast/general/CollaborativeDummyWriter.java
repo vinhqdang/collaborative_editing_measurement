@@ -53,19 +53,24 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 	
 	public void dummyType () {
 		
-		int nextStep = new Random().nextInt () % 10;
-		if (nextStep % 5 == 0) {
-			this.e.sendKeys(Keys.DELETE);
-		} else if (nextStep > 0) {
-			for (int i = 0; i < nextStep; i++) {
-				this.e.sendKeys(Keys.RIGHT);
+		try {
+			int nextStep = new Random().nextInt () % 10;
+			if (nextStep % 5 == 0) {
+				this.e.sendKeys(Keys.DELETE);
+			} else if (nextStep > 0) {
+				for (int i = 0; i < nextStep; i++) {
+					this.e.sendKeys(Keys.RIGHT);
+				}
+				this.e.sendKeys("" + c);
+			} else if (nextStep < 0) {
+				for (int i = nextStep; i < 0; i++) {
+					this.e.sendKeys(Keys.LEFT);
+				}
+				this.e.sendKeys("" + c);
 			}
-			this.e.sendKeys("" + c);
-		} else if (nextStep < 0) {
-			for (int i = nextStep; i < 0; i++) {
-				this.e.sendKeys(Keys.LEFT);
-			}
-			this.e.sendKeys("" + c);
+		} catch (Exception e1) {
+			System.out.println("Exception while sending Keys at Dummy Writer");
+			e1.printStackTrace();
 		}
 		
 	}

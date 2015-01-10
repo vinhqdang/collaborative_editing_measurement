@@ -4,7 +4,6 @@
 package fr.inria.coast.cryptpad;
 
 import fr.inria.coast.general.CollaborativeAutomator;
-import fr.inria.coast.mute2.MUTERemoteDummyWriter;
 
 /**
  * @author qdang

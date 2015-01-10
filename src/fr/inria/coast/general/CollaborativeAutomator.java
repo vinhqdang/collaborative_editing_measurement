@@ -16,7 +16,7 @@ public class CollaborativeAutomator {
 	
 	//limit number of thread can run in a host
 	//if more, need to switch to remote driver
-	protected int THRESHOLD = 10;
+	protected int THRESHOLD;
 	
 	//maximum number of threads run on each remote machine
 	protected int THRESHOLD_REMOTE = 15;

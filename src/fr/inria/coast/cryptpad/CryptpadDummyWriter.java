@@ -3,12 +3,9 @@
  */
 package fr.inria.coast.cryptpad;
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.SessionNotFoundException;
-import org.openqa.selenium.remote.UnreachableBrowserException;
 
 import fr.inria.coast.general.CollaborativeDummyWriter;
 

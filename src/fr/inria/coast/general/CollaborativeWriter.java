@@ -7,12 +7,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.SessionNotFoundException;
 
 /**
@@ -105,6 +103,9 @@ public class CollaborativeWriter extends Thread {
 			e.sendKeys(Keys.DELETE);
 		} catch (SessionNotFoundException e) {
 			System.out.println("Writer already quit");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			System.out.println("General exception when sendKeys to clear content");
 		}
 		try {
 			Thread.sleep(10000);
