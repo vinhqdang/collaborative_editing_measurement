@@ -98,6 +98,7 @@ public class CollaborativeWriter extends Thread {
 		//stop writing
 		if (counter < CollaborativeAutomator.TEXT_SIZE - 1) counter = CollaborativeAutomator.TEXT_SIZE - 1;
 		//clear the content
+		System.out.println("Clear content before Writer quit");
 		try {
 			e.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 			e.sendKeys(Keys.DELETE);

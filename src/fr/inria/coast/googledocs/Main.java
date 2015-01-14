@@ -14,30 +14,28 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int n_users[] = {1,2,4,5,6,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
+		int n_users[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
 
 		// TODO fill the last experimental information here
-		int last_user = 50;
-		int last_type = 1;
-		int last_exp = 5;
+		int last_user = 17;
+		int last_type = 10;
+		int last_exp = 01;
 		
-		String out_file = "google_with_deletion.txt";
+		String out_file = "google_full_1_thread.txt";
 
 		for (int i = 0; i < n_users.length; i++) {
-			int n_user = n_users [n_users.length - 1 - i];
+			//int n_user = n_users [n_users.length - 1 - i];
+			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
 				for (int exp_id = 1; exp_id <= 5; exp_id += 1) {
-					if (type_spd != 1 && type_spd % 2 != 0) {
+					if (type_spd != 1 && type_spd % 2 != 0 && type_spd != 5) {
 						continue;
 					}
 					//only test with type speed 1 with 40 and 50 users
 					if (n_user >= 40 && type_spd != 1) continue;
 					
-					//skip n_user = 19 && type_spd = 1 (already done)
-					if (n_user == 19 && type_spd == 1) continue;
-					
 					//continue from last time
-					if (n_user > last_user || (n_user == last_user && type_spd < last_type || (n_user == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
+					if (n_user < last_user || (n_user == last_user && type_spd < last_type || (n_user == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
 
 					System.out.println ("Running Google Docs: " + n_user + " " + type_spd + " " + exp_id);
 					

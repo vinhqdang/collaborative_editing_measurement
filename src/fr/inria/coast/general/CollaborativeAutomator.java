@@ -65,12 +65,14 @@ public class CollaborativeAutomator {
 		reader.start ();
 		
 		//wait for synchronization
+		
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e1) {
 			System.out.println("Interrupted while waiting for synchronization before start");
 			e1.printStackTrace();
 		}
+		
 		//start writer
 		writer.setPriority(Thread.MAX_PRIORITY - 1);
 		writer.start();

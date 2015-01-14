@@ -19,9 +19,9 @@ public class Main {
 		int n_users[] = {50,45,40,38,36,34,32,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
 		//int n_users[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
 		// TODO fill the last experimental information here
-		int last_user = 14;
-		int last_type = 6;
-		int last_exp = 1;
+		int last_user = 11;
+		int last_type = 10;
+		int last_exp = 3;
 
 		for (int i = 0; i < n_users.length; i++) {
 			int n_user = n_users [i];

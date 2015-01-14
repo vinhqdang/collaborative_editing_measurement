@@ -37,26 +37,10 @@ public class GoogleDocsDummyWriter extends CollaborativeDummyWriter {
 			if (nextStep % 10 == 0) {
 				int j = nextStep / 20;
 				while (j != 0) {
-					this.e.sendKeys(Keys.BACK_SPACE);
+					this.e.sendKeys(Keys.DELETE);
 					j--;
 				}
 			}
-			/*
-			int nextStep = new Random().nextInt () / 100;
-			if (nextStep % 10 == 0) {
-				this.e.sendKeys(Keys.DELETE);
-			} else if (nextStep > 0) {
-				for (int i = 0; i < nextStep; i++) {
-					this.e.sendKeys(Keys.ARROW_RIGHT);
-				}
-				this.e.sendKeys("" + c);
-			} else if (nextStep < 0) {
-				for (int i = nextStep; i < 0; i++) {
-					this.e.sendKeys(Keys.ARROW_LEFT);
-				}
-				this.e.sendKeys("" + c);
-			}
-			*/
 			try {
 				Thread.sleep(delay);
 			} catch (InterruptedException e1) {
