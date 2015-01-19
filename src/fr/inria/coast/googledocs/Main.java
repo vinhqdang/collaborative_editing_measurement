@@ -17,9 +17,9 @@ public class Main {
 		int n_users[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
 
 		// TODO fill the last experimental information here
-		int last_user = 10;
-		int last_type = 1;
-		int last_exp = 2;
+		int last_user = 22;
+		int last_type = 4;
+		int last_exp = 3;
 		
 		String out_file = "google_full_1_thread.txt";
 
