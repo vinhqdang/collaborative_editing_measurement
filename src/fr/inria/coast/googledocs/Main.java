@@ -17,9 +17,9 @@ public class Main {
 		int n_users[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
 
 		// TODO fill the last experimental information here
-		int last_user = 22;
-		int last_type = 4;
-		int last_exp = 3;
+		int last_user = 30;
+		int last_type = 2;
+		int last_exp = 1;
 		
 		String out_file = "google_full_1_thread.txt";
 
@@ -27,7 +27,7 @@ public class Main {
 			//int n_user = n_users [n_users.length - 1 - i];
 			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
-				for (int exp_id = 1; exp_id <= 10; exp_id += 1) {
+				for (int exp_id = 1; exp_id <= 3; exp_id += 1) {
 					if (type_spd != 1 && type_spd % 2 != 0 && type_spd != 5) {
 						continue;
 					}

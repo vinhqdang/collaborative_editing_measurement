@@ -14,7 +14,7 @@ public class MUTEAutomator extends CollaborativeAutomator {
 	
 	//redefine setting
 	protected String REMOTE_ADDR[] = {"152.81.15.203","152.81.15.71","152.81.12.192","152.81.7.44"};
-	protected int REMOTE_THREAD[] = {15,15,20,15};
+	protected int REMOTE_THREAD[] = {10,10,15,25};
 
 	public MUTEAutomator(int n_user, int type_spd, int exp_id, String DOC_URL,
 			int TEXT_SIZE, String RESULT_FILE) {
