@@ -1,7 +1,5 @@
 Collaborative Editor Evaluation
 ===============================
-Collaborative Editor Evaluation
-===============================
 # Introduction
 
 This tool is used for evaluating the performance of online real - time collaborative editing tool. 
@@ -12,7 +10,7 @@ Currently, the following services are supported:
 4. [Cryptpad](https://github.com/cjdelisle/cryptpad)
 
 # How to use
-The application is provided as Java source code. Follows these steps to run the experiment by yourself, with Eclipse as IDE (you can use whatever IDE you prefer)
+The application is provided as Java source code. Follows these steps to run the experiment by yourself, with Eclipse as IDE (you can use whatever IDE you prefer):
 1. Open Eclipse and import the project.
 2. Inside Eclipse, under 'src' folder, you will see different packages:
   1. general: contains abstract classes
