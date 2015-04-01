@@ -11,14 +11,14 @@ Currently, the following services are supported:
 
 # How to use
 The application is provided as Java source code. Follows these steps to run the experiment by yourself, with Eclipse as IDE (you can use whatever IDE you prefer):
-1. Open Eclipse and import the project.
-2. Inside Eclipse, under 'src' folder, you will see different packages:
+* Open Eclipse and import the project.
+* Inside Eclipse, under 'src' folder, you will see different packages:
   * general: contains abstract classes
   * cryptpad: for Cryptpad
   * googledocs: for Google Docs
   * mute2: for MUTE
   * zohodocs: incomplete
-3. Setting up the environment:
+* Setting up the environment:
   * It is recommended that you run the experiment with multiple computers than one.
 Let's say, if your main computer where you stored the source code is computer 1 with IP address 1.1.1.1
 You have other two computers which join the experiment, B and C, with corresponding IP address is 1.1.1.2 and 1.1.1.3
@@ -32,7 +32,7 @@ Then, run the selenium server on both computer B and C by using the command
 cd /path/to/selenium_server
 java -jar /selenium_server/jar/file
 ```
-4. The code need to be updated before running. Let's say if you want to run Google Docs experiment.
+* The code need to be updated before running. Let's say if you want to run Google Docs experiment.
   * Modify the *selenium_config.txt* according to your computer settings
 For instance, in our case:
 ```
@@ -47,7 +47,7 @@ The last address is the remote server which take care all the unexpected request
 THRESHOLD = 10;
 ```
 
-5. Setting up the parameter for experiment:
+* Setting up the parameter for experiment:
 Open Main.java file under the package fr.inria.coast.googledocs
 The following variables may be modified:
   * n_users: define what number of user you want to test
@@ -55,7 +55,7 @@ The following variables may be modified:
   * out_file: the name of output file, so the results will be store in this file.
 If everything is done, you can start by clicking to Run button of Eclipse.
 
-6. Processing the result:
+* Processing the result:
 Suppose you set the out_file variable to "raw.txt"
 You need to process this result file by using the provided Python script:
 ```
@@ -63,7 +63,7 @@ python processResult.py raw.txt final_output.txt
 ```
 The result will be processed and stored at "final_output.txt" file.
 
-7. You can visualize the result with R:
+* You can visualize the result with R:
   * Open R and move to the directory of the code
   * Run the following R code:
 ```R
