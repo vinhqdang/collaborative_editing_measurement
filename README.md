@@ -4,10 +4,10 @@ Collaborative Editor Evaluation
 
 This tool is used for evaluating the performance of online real - time collaborative editing tool. 
 Currently, the following services are supported:
-1. [Google Docs](https://docs.google.com)
-2. [MUTE](https://github.com/MatthieuNICOLAS/mute-demo)
-3. [Etherpad](http://etherpad.org/)
-4. [Cryptpad](https://github.com/cjdelisle/cryptpad)
+* [Google Docs](https://docs.google.com)
+* [MUTE](https://github.com/MatthieuNICOLAS/mute-demo)
+* [Etherpad](http://etherpad.org/)
+* [Cryptpad](https://github.com/cjdelisle/cryptpad)
 
 # How to use
 The application is provided as Java source code. Follows these steps to run the experiment by yourself, with Eclipse as IDE (you can use whatever IDE you prefer):
