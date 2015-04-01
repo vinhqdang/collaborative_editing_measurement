@@ -10,17 +10,17 @@ import fr.inria.coast.general.CollaborativeAutomator;
  *
  */
 public class GoogleDocsAutomator extends CollaborativeAutomator {
-	
+
 	//redefine setting
-		protected String REMOTE_ADDR[] = {"152.81.15.203","152.81.3.91","152.81.15.71","152.81.12.192"};
-		protected int REMOTE_THREAD[] = {15,15,10,10};
-	
+	//protected String REMOTE_ADDR[] = {"152.81.15.203","152.81.3.91","152.81.15.71","152.81.12.192"};
+	//protected int REMOTE_THREAD[] = {15,15,10,10};
+
 	public GoogleDocsAutomator(int n_user, int type_spd, int exp_id,
 			String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
 		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
 		THRESHOLD = 0;
 		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
-		
+
 		this.reader = new GoogleDocsReader(n_user, type_spd, DOC_URL, exp_id);
 		this.writer = new GoogleDocsWriter(n_user, type_spd, DOC_URL, exp_id);
 		if (this.n_user > 1) {
@@ -46,7 +46,7 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 			}
 		}
 	}
-	
+
 	@Override
 	public void run () {
 		//start dummy writer if needed
@@ -55,7 +55,7 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 			for (int i = 0; i < n_LocalThread - 1; i++) {
 				dummies [i].start();
 			}
-			
+
 			if (n_user > THRESHOLD) {
 				for (int i = 0; i < n_user - THRESHOLD; i++) {
 					remoteDummies[i].start();
@@ -65,7 +65,7 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 		//start reader
 		//reader.setPriority(Thread.MAX_PRIORITY);
 		reader.start ();
-		
+
 		//wait for synchronization
 		/*
 		try {
@@ -74,7 +74,7 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 			System.out.println("Interrupted while waiting for synchronization before start");
 			e1.printStackTrace();
 		}
-		*/
+		 */
 		//start writer
 		//writer.setPriority(Thread.MAX_PRIORITY - 1);
 		writer.start();
