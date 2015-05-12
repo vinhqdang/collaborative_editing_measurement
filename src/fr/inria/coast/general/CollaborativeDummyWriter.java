@@ -52,7 +52,6 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 	}
 	
 	public void dummyType () {
-		
 		try {
 			int nextStep = new Random().nextInt () % 10;
 			if (nextStep % 5 == 0) {

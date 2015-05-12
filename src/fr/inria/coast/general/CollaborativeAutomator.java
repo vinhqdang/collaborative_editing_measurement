@@ -69,6 +69,7 @@ public class CollaborativeAutomator {
 
 			if (n_user > THRESHOLD) {
 				for (int i = 0; i < n_user - THRESHOLD; i++) {
+					System.out.println("Start remote dummy: " + i);
 					remoteDummies[i].start();
 				}
 			}

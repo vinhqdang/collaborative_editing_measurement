@@ -18,17 +18,16 @@ import org.openqa.selenium.remote.SessionNotFoundException;
  *
  */
 public class CollaborativeReader extends Thread {
-	protected
-	WebDriver driver;
-	int type_spd;
-	int n_user;
-	String docURL;
-	int exp_id;
+	protected WebDriver driver;
+	protected int type_spd;
+	protected int n_user;
+	protected String docURL;
+	protected int exp_id;
 
 	//store the time of reading the modification
-	long readTime [];
-	boolean getChar [];
-	int counter;
+	protected long readTime [];
+	protected boolean getChar [];
+	protected int counter;
 
 	protected WebElement e;
 	
