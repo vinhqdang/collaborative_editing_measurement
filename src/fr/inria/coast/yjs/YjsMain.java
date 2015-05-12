@@ -18,9 +18,9 @@ public class YjsMain {
 		//int n_users[] = {50,45,40,38,36,34,32,30,25,20,15,10,5,1};
 		//int n_users[] = {3};
 		//int n_users[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
-		int n_users[] = {1,3,5,10,15, 20, 25,30,32,34,36,40,50};
+		int n_users[] = {1,3,5,10,15, 20, 25,30,32,34,36,40,42,45,48,50};
 		// TODO fill the last experimental information here
-		int last_user = 38;
+		int last_user = 40;
 		int last_type = 10;
 		int last_exp = 5;
 		
@@ -31,7 +31,7 @@ public class YjsMain {
 			int n_user = n_users [i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
 				if (type_spd % 2 != 0 && type_spd != 1 && type_spd != 5) continue;
-				if (n_user >= 50 && type_spd != 1) continue;
+				if (n_user >= 40 && type_spd != 1) continue;
 				for (int exp_id = 1; exp_id <= NUM_EXP; exp_id += 1) {
 					//continue from last time
 					if (n_user < last_user || (n_user == last_user && type_spd < last_type || (n_user == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
