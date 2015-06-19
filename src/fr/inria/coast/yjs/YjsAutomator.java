@@ -17,7 +17,7 @@ public class YjsAutomator extends CollaborativeAutomator {
 
 	//redefine setting
 		protected String REMOTE_ADDR[] = {"152.81.13.132","152.81.15.71","152.81.12.192","152.81.7.44"};
-		protected int REMOTE_THREAD[] = {15,15,15,25};
+		protected int REMOTE_THREAD[] = {20,20,20,25};
 
 		public YjsAutomator(int n_user, int type_spd, int exp_id, String DOC_URL,
 				int TEXT_SIZE, String RESULT_FILE) {
