@@ -18,7 +18,6 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 	public GoogleDocsAutomator(int n_user, int type_spd, int exp_id,
 			String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
 		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
-		THRESHOLD = 0;
 		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
 
 		this.reader = new GoogleDocsReader(n_user, type_spd, DOC_URL, exp_id);

@@ -44,19 +44,19 @@ public class CollaborativeAutomator {
 			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		}
 
-		this.n_user = n_user;
-		this.type_spd = type_spd;
-		this.exp_id = exp_id;
-		this.docURL = DOC_URL;
-		CollaborativeAutomator.TEXT_SIZE = TEXT_SIZE;
-		CollaborativeAutomator.RESULT_FILE = RESULT_FILE;
-		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
 		try {
 			this.readConfigFile("selenium_config.txt");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error when reading the config file.");
 		}
+		this.n_user = n_user;
+		this.type_spd = type_spd;
+		this.exp_id = exp_id;
+		this.docURL = DOC_URL;
+		CollaborativeAutomator.TEXT_SIZE = TEXT_SIZE;
+		CollaborativeAutomator.RESULT_FILE = RESULT_FILE;				
+		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
 	}
 
 	public void run () {
@@ -149,9 +149,14 @@ public class CollaborativeAutomator {
 			while ((configLine = configBufferedReader.readLine()) != null) {
 				String[] lines = configLine.split(" ");
 				if (lines.length >= 2) {
-					REMOTE_ADDR [count] = lines [0];
-					int _numThread = Integer.parseInt(lines[1]);
-					REMOTE_THREAD [count] = _numThread;
+					if (lines[0].toUpperCase().equals("LOCAL") == true) {
+						THRESHOLD = Integer.parseInt(lines[1]);
+					}
+					else {
+						REMOTE_ADDR [count] = lines [0];
+						int _numThread = Integer.parseInt(lines[1]);
+						REMOTE_THREAD [count] = _numThread;
+					}
 				}
 				else if (lines.length == 1) {
 					REMOTE_LAST_ADDR = lines [0];
