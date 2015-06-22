@@ -141,8 +141,8 @@ public class CollaborativeAutomator {
 		configReader = new FileReader (config_file);
 		BufferedReader configBufferedReader = new BufferedReader(configReader);
 
-		REMOTE_ADDR = new String [numOfLines];
-		REMOTE_THREAD = new int [numOfLines];
+		String[] REMOTE_ADDR_TMP = new String [numOfLines];
+		int[] REMOTE_THREAD_TMP = new int [numOfLines];
 
 		int count = 0;
 		try {
@@ -153,9 +153,10 @@ public class CollaborativeAutomator {
 						THRESHOLD = Integer.parseInt(lines[1]);
 					}
 					else {
-						REMOTE_ADDR [count] = lines [0];
+						REMOTE_ADDR_TMP [count] = lines [0];
 						int _numThread = Integer.parseInt(lines[1]);
-						REMOTE_THREAD [count] = _numThread;
+						REMOTE_THREAD_TMP [count] = _numThread;
+						count++;
 					}
 				}
 				else if (lines.length == 1) {
@@ -168,5 +169,9 @@ public class CollaborativeAutomator {
 			e.printStackTrace();
 		}
 		configBufferedReader.close();
+		for (int i = 0; i < count; i++) {
+			REMOTE_ADDR [i] = REMOTE_ADDR_TMP[i];
+			REMOTE_THREAD [i] = REMOTE_THREAD_TMP [i];
+		}
 	}
 }
