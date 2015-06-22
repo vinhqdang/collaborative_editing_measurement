@@ -42,15 +42,28 @@ displayDelay <- function (filename,user = 0, speed = 0) {
 
 try_regression <- function (file_name, speed=1, poly = 3, x_step=2)
 {
-  setwd ("/Users/qdang/workspace/collborative_editing_measurement")
+  #setwd ("/Users/qdang/workspace/collborative_editing_measurement")
+  plot.new()
   df <- read.table (file_name, header = TRUE)
   df$delay <- df$delay / 1000
   df <- df [df$speed == speed,]
   means <- tapply (df$delay, df$user, mean)
   unique(df$user)
   lm <- lm (means ~ poly (unique(df$user), 3))
-  plot (df$delay ~ df$user,ylab="Delay in seconds", xlab="Number of user", main=paste("Google Docs performance with typing speed = ", speed), las=2)
-  axis(side=1,at=seq(0,50,by=x_step),las=2)
-  lines (unique (df$user), predict (lm), col="red")
+  boxplot (df$delay ~ df$user,ylab="Delay in seconds", xlab="Number of user", 
+           main=paste("Google Docs performance with typing speed = ", speed), las=2)
+  #axis(side=1,at=seq(0,50,by=x_step),las=2)
+  #lines (unique (df$user), predict (lm), col="red")
+  lines (predict(lm), col = "red")
   lm
+}
+
+processAllGoogleDocs <- function (file_name, poly = 3, x_step = 2) {
+  df <- read.table (file_name, header = TRUE)   #read data
+  df$delay <- df$delay / 1000 #convert to seconds
+  speeds <- c (1,2,4,6,8,10)
+  for (speed in speeds) {
+    model = try_regression (file_name = file_name, speed = speed)
+    summary(model)
+  }
 }

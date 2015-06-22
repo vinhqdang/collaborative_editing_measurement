@@ -62,6 +62,10 @@ Perform the evaluation of Google Docs's performance in collaborative editing lar
 
 #+begin_src R :exports both :results output
 #install.packages("QuantPsyc")
+#library ("QuantPsyc")
+#install.packages ("plyr")
+#library ("plyr")
+#library ("Rmisc")
 #+end_src
 
 #+RESULTS:
@@ -69,35 +73,36 @@ Perform the evaluation of Google Docs's performance in collaborative editing lar
 
 * Data Analysis
 
-** Setup                                                          :noexport:
+** Setup
 
-*** It is suggested that the measurement should be run on multiple computers that are accessible between each others. However, running on a single computer is possible.
+- It is suggested that the measurement should be run on multiple computers that are accessible between each others. However, running on a single computer is possible.
 
-*** If the users decide to run the measurement on multiple computers, there are several small steps need to be done manually. These steps are not required in case running on a single computer.
+- If the users decide to run the measurement on multiple computers, there are several small steps need to be done manually. These steps are not required in case running on a single computer.
 
-*** The steps are as following:
+- The next steps are:
 
-**** We need 1 master computer, where the measurement will run on and controls other computers.
-**** For each other slave computers:
+ + We need 1 master computer, where the measurement will run on and controls other computers.
+ + For each other slave computers:
 
-***** Download chromedriver at sites.google.com/a/chromium.org/chromedriver/ and Selenium Standalone Server at www.seleniumhq.org/download. Unzip and put them in a same directory. Set the execute mod if needed (in *nix system). Then start selenium server as running an usual JAR file (java -jar selenium_server_jar_file)
+  + Download chromedriver at sites.google.com/a/chromium.org/chromedriver/ and Selenium Standalone Server at www.seleniumhq.org/download. Unzip and put them in a same directory. Set the execute mod if needed (in *nix system). Then start selenium server as running an usual JAR file (java -jar selenium-server-jar-file) inside the directory which contains these files.
 
-**** On the master computer, open the file "selenium_config.txt" provided with this document.
+ + On the master computer, download, unzip and put chromedriver into the same directory with this document. The chromedriver for Linux has been already provided. Set the execute mode for chromedriver file also.
 
-***** The first line (LOCAL) decides how many clients you want to simulate in the master computer. If you run with a single master computer and no slave, the number follows the keyword "LOCAL" should be 50. The recommend value is 0.
+ + On the master computer, open the file "selenium_config.txt" provided with this document.
 
-***** The following lines are IP address or hostnames if possible of each slave computers and the number of clients you want to simulate for each slave computers, one for a line. 
+  + The first line (LOCAL) decides how many clients you want to simulate in the master computer. If you run with a single master computer and no slave, the number follows the keyword "LOCAL" should be 50. The recommend value is 0.
 
-***** The last line is the IP address or hostname of one slave computer, which will handle all other requests in the case the number of requests in runtime exceed the total number you defined both master computer and slave computers in above lines. For instance, if you defined that the master computer will simulate up to 10 clients and the slave computer number 1 (you have only 1 slave computer) will simulate 20 clients, but in runtime you requested the 31st client - this client will be simulated by the machine with IP address in the last line.
+  + The following lines are IP address or hostnames if possible of each slave computers and the number of clients you want to simulate for each slave computers, one for a line. 
 
-**** On the master computer, open the file "num_user_setting.txt" provided with this document.
+  + The last line is the IP address or hostname of one slave computer, which will handle all other requests in the case the number of requests in runtime exceed the total number you defined both master computer and slave computers in above lines. For instance, if you defined that the master computer will simulate up to 10 clients and the slave computer number 1 (you have only 1 slave computer) will simulate 20 clients, but in runtime you requested the 31st client - this client will be simulated by the machine with IP address in the last line.
 
-***** This file contains only one line, which defines what number of users we will run on measurement. For instance, if the line content is (without quotes) "1 5 10 20", the measurement will run first with 1 client, then 5 clients, and so on. You can modify this file if needed, otherwise leave it default. Please note that each numbers in the line are separated by space.
+ + On the master computer, open the file "num_user_setting.txt" provided with this document.
 
-**** The file "last_exp_info.txt" provided with this document is handled automatically by the measurement. However, you can modify this file to skip or redo some particular measurement setting. The file contains the last experiment information, so if because of some reasons the measurement stops, next time it will start by its last experiment but not run everything from beginning.
+  + This file contains only one line, which defines what number of users we will run on measurement. For instance, if the line content is (without quotes) "1 5 10 20", the measurement will run first with 1 client, then 5 clients, and so on. You can modify this file if needed, otherwise leave it default. Please note that each numbers in the line are separated by space.
 
-*** All computer requires Java SE to be installed. The measurement has been developed with JDK 8 so it is the recommend version. Google Chrome browsers also need to be updated to the latest version. To process data after the measurement finished, Python 2.7+ and R (version 3.2.1 or later) are required.
+ + The file "last_exp_info.txt" provided with this document is handled automatically by the measurement. However, you can modify this file to skip or redo some particular measurement setting. The file contains the last experiment information, so if because of some reasons the measurement stops, next time it will start by its last experiment but not run everything from beginning.
 
+- All computer requires Java SE to be installed. The measurement has been developed with JDK 8 so it is the recommend version. Google Chrome browsers also need to be updated to the latest version. To process data after the measurement finished, Python 2.7+ and R (version 3.2.1 or later) are required.
 ** Running the experiment
 
 #+begin_src sh
@@ -115,35 +120,111 @@ python processResult.py googledocs.txt googledocs-delays.txt
 
 ** Delay Visualization
 
-#+begin_src R :session :results graphics :file figs/googledocs-delays-2char_per_sec.png :width 800 :height 300 :exports both
-  TYPING_SPEED=2 # 2 chars/sec
+#+begin_src R :session :results output graphics :file figs/g1.png :exports both :width 800 :height 500
+#source ("ProcessData.R")
+try_regression <- function (file_name, speed=1, poly = 3, x_step=2)
+{
+  #setwd ("/Users/qdang/workspace/collborative_editing_measurement")
+  plot.new()
+  df <- read.table (file_name, header = TRUE)
+  df$delay <- df$delay / 1000
+  df <- df [df$speed == speed,]
+  means <- tapply (df$delay, df$user, mean)
+  lm <- lm (means ~ poly (unique(df$user), 3))
+  boxplot (df$delay ~ df$user,ylab="Delay in seconds", xlab="Number of user", 
+           main=paste("Google Docs performance with typing speed = ", speed, " char/sec"), las=2)
+  #axis(side=1,at=seq(0,50,by=x_step),las=2)
+  #lines (unique (df$user), predict (lm), col="red")
+  lines (predict(lm), col = "red")
+  lm
+}
 
-  df <- read.table('googledocs-delays.txt', header=TRUE)
-  df$delay <- df$delay / 1000   # convert delay in seconds
-  df <- df[df$speed == TYPING_SPEED,] # filter observation for a specific typing speed
-  df$speed <- NULL   # suppress speed column
-  df <- df[df$delay<50,]   # remove (22 51641) outlier
-
-  # add missing row 
-  for (newrow in c(3, 7, 9, 31, 33, 35, 37)) {
-      df <- rbind(df, c(newrow, NA))  
+processAllGoogleDocs <- function (file_name, poly = 3, x_step = 2) {
+  df <- read.table (file_name, header = TRUE)   #read data
+  df$delay <- df$delay / 1000 #convert to seconds
+  speeds <- c (1,2,4,5,6,8, 10)
+  for (speed in speeds) {
+    model = try_regression (file_name = file_name, speed = speed, poly = poly, x_step = x_step)
+    summary(model)
   }
-
-  tgc <- summarySE(df, measurevar="delay", groupvars=c("user"))
-  is.nan.data.frame <- function(x) do.call(cbind, lapply(x, is.na))
-  tgc[is.nan(tgc)] <- 0
-
-  plot <- ggplot(df,aes(factor(user), delay)) +
-      coord_map(ylim = c(0,18)) + # cropping y-axis
-      geom_point(color="royalblue4", alpha=.4,shape=16,size=2) +
-      stat_smooth(color="black", data=df, linetype="dashed", aes(group=1,x=factor(user), y=delay), method='lm', formula=y~x, se=FALSE, fullrange=TRUE) +
-      scale_x_discrete(breaks=c(0,5,10,15,20,25,30,35,40)) +
-      labs(x = "Number of Users", y = "Delay (sec)") + 
-      theme_bw() +
-      theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
-  print(plot)
+}
+#processAllGoogleDocs ("googledocs-delays.txt")
+model1 = try_regression("googledocs-delays.txt", speed = 1)
 #+end_src
 
 #+RESULTS:
+[[file:g1.png]]
+
+#+begin_src R :session :results output :exports both
+summary (model1)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+Call:
+lm(formula = means ~ poly(unique(df$user), 3))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.0590 -0.4989 -0.2889  0.2166  4.5543 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                 5.9085     0.2226  26.541  < 2e-16 ***
+poly(unique(df$user), 3)1  37.7039     1.2789  29.483  < 2e-16 ***
+poly(unique(df$user), 3)2  22.3560     1.2789  17.481  < 2e-16 ***
+poly(unique(df$user), 3)3   6.8780     1.2789   5.378 8.87e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.279 on 29 degrees of freedom
+Multiple R-squared:  0.9765,	Adjusted R-squared:  0.974 
+F-statistic: 401.2 on 3 and 29 DF,  p-value: < 2.2e-16
+#+end_example
+
+#+begin_src R :session :results graphics :file figs/g2.png :exports both :width 800 :height 500
+model2 = try_regression ("googledocs-delays.txt", speed = 2)
+#+end_src
+
+#+RESULTS:
+[[file:figs/g2.png]]
+
+#+begin_src R :session :results output :exports both
+summary (model2)
+#+end_src
+
+#+begin_src R :session :results graphics :file figs/g4.png :exports both :width 800 :height 500
+model4 = try_regression ("googledocs-delays.txt", speed = 4)
+#+end_src
+
+#+begin_src R :session :results output :exports both
+summary (model4)
+#+end_src
+
+#+begin_src R :session :results graphics :file figs/g6.png :exports both :width 800 :height 500
+model6 = try_regression ("googledocs-delays.txt", speed = 6)
+#+end_src
+
+#+begin_src R :session :results output :exports both
+summary (model6)
+#+end_src
+
+#+begin_src R :session :results graphics :file figs/g8.png :exports both :width 800 :height 500
+model8 = try_regression ("googledocs-delays.txt", speed = 8)
+#+end_src
+
+#+begin_src R :session :results output :exports both
+summary (model8)
+#+end_src
+
+#+begin_src R :session :results graphics[ :file figs/g10.png :exports both
+model10 = try_regression ("googledocs-delays.txt", speed = 10)
+#+end_src
+
+#+begin_src R :session :results output :exports both
+  summary (model10)
+#+end_src
+
 
 
