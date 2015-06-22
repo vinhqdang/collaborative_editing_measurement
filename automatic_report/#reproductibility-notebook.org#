@@ -1,0 +1,150 @@
+# -*- mode: org; -*-
+# -*- coding: utf-8 -*-
+#+STARTUP: overview indent inlineimages
+#+TITLE:       Reproducibility Notebook for 'Performance evaluation of Google Docs'
+#+AUTHOR:      Quang - Vinh DANG
+#+LANGUAGE:    en
+#+TAGS: IMPORTANT(i) TEST(t) DEPRECATED(d) noexport(n)
+
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LATEX_CLASS_OPTIONS: [10pt]
+#+LATEX_HEADER: \usepackage{a4wide}
+#+LATEX_HEADER: \usepackage{todonotes}
+
+#+OPTIONS: h:5 num:3
+
+#+LATEX: \makeatletter
+#+LATEX: \renewcommand{\verbatim@font}{\ttfamily\footnotesize}
+#+LATEX: \makeatother
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+
+
+* Project Overview
+
+** Authors                                                        :noexport:
+- Quang - Vinh DANG mailto:quang-vinh.dang@inria.fr, Coast/LORIA/Inria NGE
+  
+
+** Purpose of the experiment
+Perform the evaluation of Google Docs's performance in collaborative editing large scale settings.
+
+
+* Typical Usage                                                    :noexport:
+
+** Emacs Setup
+  This document has local variables in its postembule, which should
+  allow org-mode to work seamlessly without any setup. If you're
+  uncomfortable using such variables, you can safely ignore them at
+  startup. Exporting may require that you copy them in your .emacs.
+
+# Local Variables:
+# eval:    (require 'org-install)
+# eval:    (setq org-alphabetical-lists t)
+# eval:    (setq org-src-fontify-natively t)
+# eval:    (add-hook 'org-babel-after-execute-hook 'org-display-inline-images) 
+# eval:    (add-hook 'org-mode-hook 'org-display-inline-images)
+# eval:    (add-hook 'org-mode-hook 'org-babel-result-hide-all)
+# End:
+  
+
+** Installing dependencies
+
+#+begin_src R :exports both :results output
+#install.packages("QuantPsyc")
+#+end_src
+
+#+RESULTS:
+
+
+* Data Analysis
+
+** Setup                                                          :noexport:
+
+*** It is suggested that the measurement should be run on multiple computers that are accessible between each others. However, running on a single computer is possible.
+
+*** If the users decide to run the measurement on multiple computers, there are several small steps need to be done manually. These steps are not required in case running on a single computer.
+
+*** The steps are as following:
+
+**** We need 1 master computer, where the measurement will run on and controls other computers.
+**** For each other slave computers:
+
+***** Download chromedriver at sites.google.com/a/chromium.org/chromedriver/ and Selenium Standalone Server at www.seleniumhq.org/download. Unzip and put them in a same directory. Set the execute mod if needed (in *nix system). Then start selenium server as running an usual JAR file (java -jar selenium_server_jar_file)
+
+**** On the master computer, open the file "selenium_config.txt" provided with this document.
+
+***** The first line (LOCAL) decides how many clients you want to simulate in the master computer. If you run with a single master computer and no slave, the number follows the keyword "LOCAL" should be 50. The recommend value is 0.
+
+***** The following lines are IP address or hostnames if possible of each slave computers and the number of clients you want to simulate for each slave computers, one for a line. 
+
+***** The last line is the IP address or hostname of one slave computer, which will handle all other requests in the case the number of requests in runtime exceed the total number you defined both master computer and slave computers in above lines. For instance, if you defined that the master computer will simulate up to 10 clients and the slave computer number 1 (you have only 1 slave computer) will simulate 20 clients, but in runtime you requested the 31st client - this client will be simulated by the machine with IP address in the last line.
+
+**** On the master computer, open the file "num_user_setting.txt" provided with this document.
+
+***** This file contains only one line, which defines what number of users we will run on measurement. For instance, if the line content is (without quotes) "1 5 10 20", the measurement will run first with 1 client, then 5 clients, and so on. You can modify this file if needed, otherwise leave it default. Please note that each numbers in the line are separated by space.
+
+**** The file "last_exp_info.txt" provided with this document is handled automatically by the measurement. However, you can modify this file to skip or redo some particular measurement setting. The file contains the last experiment information, so if because of some reasons the measurement stops, next time it will start by its last experiment but not run everything from beginning.
+
+*** All computer requires Java SE to be installed. The measurement has been developed with JDK 8 so it is the recommend version. Google Chrome browsers also need to be updated to the latest version. To process data after the measurement finished, Python 2.7+ and R (version 3.2.1 or later) are required.
+
+** Running the experiment
+
+#+begin_src sh
+java -jar GoogleDocs.jar
+#+end_src
+
+** Data processing
+
+*** The result as raw data will be provided in file "googledocs.txt". 
+*** We provided a Python script to parse this data
+
+#+begin_src sh
+python processResult.py googledocs.txt googledocs-delays.txt
+#+end_src
+
+** Delay Visualization
+
+#+begin_src R :session :results graphics :file figs/googledocs-delays-2char_per_sec.png :width 800 :height 300 :exports both
+  TYPING_SPEED=2 # 2 chars/sec
+
+  df <- read.table('googledocs-delays.txt', header=TRUE)
+  df$delay <- df$delay / 1000   # convert delay in seconds
+  df <- df[df$speed == TYPING_SPEED,] # filter observation for a specific typing speed
+  df$speed <- NULL   # suppress speed column
+  df <- df[df$delay<50,]   # remove (22 51641) outlier
+
+  # add missing row 
+  for (newrow in c(3, 7, 9, 31, 33, 35, 37)) {
+      df <- rbind(df, c(newrow, NA))  
+  }
+
+  tgc <- summarySE(df, measurevar="delay", groupvars=c("user"))
+  is.nan.data.frame <- function(x) do.call(cbind, lapply(x, is.na))
+  tgc[is.nan(tgc)] <- 0
+
+  plot <- ggplot(df,aes(factor(user), delay)) +
+      coord_map(ylim = c(0,18)) + # cropping y-axis
+      geom_point(color="royalblue4", alpha=.4,shape=16,size=2) +
+      stat_smooth(color="black", data=df, linetype="dashed", aes(group=1,x=factor(user), y=delay), method='lm', formula=y~x, se=FALSE, fullrange=TRUE) +
+      scale_x_discrete(breaks=c(0,5,10,15,20,25,30,35,40)) +
+      labs(x = "Number of Users", y = "Delay (sec)") + 
+      theme_bw() +
+      theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+  print(plot)
+#+end_src
+
+#+RESULTS:
+[[file:figs/googledocs-delays-2char_per_sec.png]]
+
+
