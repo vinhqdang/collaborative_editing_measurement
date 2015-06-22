@@ -3,6 +3,10 @@
  */
 package fr.inria.coast.googledocs;
 
+import java.io.IOException;
+
+import fr.inria.coast.general.Helper;
+
 
 /**
  * @author qdang
@@ -12,14 +16,16 @@ public class Main {
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
-		int n_users[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,34,36,38,40,45,50};
+	public static void main(String[] args) throws IOException {
+		int n_users[] = Helper.loadNumUsers("num_user_setting.txt");
 
+		int [] lastExpInfo = Helper.loadLastExpInfo("last_exp_info.txt"); 
 		// TODO fill the last experimental information here
-		int last_user = 0;
-		int last_type = 0;
-		int last_exp = 0;
+		int last_user = lastExpInfo[0];
+		int last_type = lastExpInfo[1];
+		int last_exp = lastExpInfo[2];
 		
 		String out_file = "googledocs.txt";
 
@@ -50,6 +56,11 @@ public class Main {
 					GoogleDocsAutomator automator = new GoogleDocsAutomator(n_user, type_spd, exp_id, DOC_URLS[exp_id%DOC_URLS.length], 10, out_file);
 					automator. run();
 					try {
+						int [] info = new int [3];
+						info [0] = n_user;
+						info [1] = type_spd;
+						info [2] = exp_id;
+						Helper.saveLastExpInfo("last_exp_info.txt", info);
 						System.out.println("Finished Google: " + n_user + " " + type_spd + " " + exp_id);
 						System.gc();
 						if (exp_id % 5 == 0) {
