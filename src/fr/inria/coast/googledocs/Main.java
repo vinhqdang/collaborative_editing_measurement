@@ -22,7 +22,7 @@ public class Main {
 		int n_users[] = Helper.loadNumUsers("num_user_setting.txt");
 
 		int [] lastExpInfo = Helper.loadLastExpInfo("last_exp_info.txt"); 
-		// TODO fill the last experimental information here
+		
 		int last_user = lastExpInfo[0];
 		int last_type = lastExpInfo[1];
 		int last_exp = lastExpInfo[2];

@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import sun.security.util.Length;
+
 
 public class CollaborativeAutomator {
 	public static int TEXT_SIZE;
@@ -143,6 +145,9 @@ public class CollaborativeAutomator {
 
 		String[] REMOTE_ADDR_TMP = new String [numOfLines];
 		int[] REMOTE_THREAD_TMP = new int [numOfLines];
+		
+		REMOTE_ADDR = new String [numOfLines];
+		REMOTE_THREAD = new int [numOfLines];
 
 		int count = 0;
 		try {
