@@ -79,7 +79,11 @@ public class CollaborativeWriter extends Thread {
 		try {
 			//clear the content
 			System.out.println("Clear content");
-			e.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			if (OSValidator.isMac()) {
+				e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+			} else {
+				e.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			}
 			e.sendKeys(Keys.DELETE);
 			try {
 				Thread.sleep(10000);
@@ -100,7 +104,11 @@ public class CollaborativeWriter extends Thread {
 		//clear the content
 		System.out.println("Clear content before Writer quit");
 		try {
-			e.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			if (OSValidator.isMac()) {
+				e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+			} else {
+				e.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			}
 			e.sendKeys(Keys.DELETE);
 		} catch (SessionNotFoundException e) {
 			System.out.println("Writer already quit");
