@@ -10,7 +10,10 @@ Currently, the following services are supported:
 * [Cryptpad](https://github.com/cjdelisle/cryptpad)
 
 # How to use
-The application is provided as Java source code. Follows these steps to run the experiment by yourself, with Eclipse as IDE (you can use whatever IDE you prefer):
+The application is provided as Java source code. Follows these steps to run the experiment by yourself (tested with Eclipse, however it is supposed to be runable without depending on IDE.)
+
+* First of all you need to download a correct [chromedriver](http://chromedriver.storage.googleapis.com/index.html) version for your operating system and put the file at the root directory of the project. In \*nix system, you may need to grant the *execute* permission.
+
 * Open Eclipse and import the project.
 * Inside Eclipse, under 'src' folder, you will see different packages:
   * general: contains abstract classes
@@ -36,24 +39,39 @@ java -jar /selenium_server/jar/file
   * Modify the *selenium_config.txt* according to your computer settings
 For instance, in our case:
 ```
+LOCAL 10
 1.1.1.2 20
 1.1.1.3 30
 1.1.1.4
 ```
+
+The first line tells us that there is maximum 10 threads will be executed in the local (or your machine).
+
+There will be up to 20 threads will be run on the machine with IP address 1.1.1.2.
+
 The last address is the remote server which take care all the unexpected request (for instance, if in runtime you have more than 50 requests).
-   * You also need to modify the variable THRESHOLD in the same file, to indicate how many users will be simulated on computer A (the computer which run code)
-```java
-//inside the constructor of GoogleDocsAutomator
-THRESHOLD = 10;
-```
 
 * Setting up the parameter for experiment:
-Open Main.java file under the package fr.inria.coast.googledocs
-The following variables may be modified:
-  * n_users: define what number of user you want to test
-  * last_user, last_type, last_exp: define the last experiment so you can continue from the last time. If you start from beginning, just set all of them to 0.
-  * out_file: the name of output file, so the results will be store in this file.
-If everything is done, you can start by clicking to Run button of Eclipse.
+
+	* In *num_user_setting.txt* file, you can set up the number of users which will be simulated. The content of the file looks like:
+
+	```
+	1 5 10 20 50
+	```
+	
+	It means, the program will simulate the system with 1 user, 5 users, etc.
+	
+	* The file *last_exp_info.txt* should be updated automatically during experiment, but in the beginning it should contain
+
+	```
+	NUM_USER 0 
+	TYPE_SPD 0
+	EXP_ID 0
+	```
+	
+	The content of this file is the last experiment configuration, so you can stop and restart the experiment in next time.
+
+* If everything is done, you can start by clicking to Run button of Eclipse.
 
 * Processing the result:
 Suppose you set the out_file variable to "raw.txt"
