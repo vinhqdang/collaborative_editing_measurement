@@ -28,7 +28,7 @@ public class Main {
 		int last_exp = lastExpInfo[2];
 		
 		String out_file = "googledocs.txt";
-
+		
 		for (int i = 0; i < n_users.length; i++) {
 			//int n_user = n_users [n_users.length - 1 - i];
 			int n_user = n_users [i];

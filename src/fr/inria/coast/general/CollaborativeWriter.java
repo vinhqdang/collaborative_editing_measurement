@@ -3,6 +3,7 @@
  */
 package fr.inria.coast.general;
 
+import java.awt.im.InputContext;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -46,6 +47,10 @@ public class CollaborativeWriter extends Thread {
 
 	@Override
 	public void run () {
+		//get current language
+		InputContext context = InputContext.getInstance();
+		String lg = context.getLocale().toString().substring(0,2);
+		System.out.println(lg);
 		for (counter = 0; counter < CollaborativeAutomator.TEXT_SIZE; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
 			e.sendKeys(String.format ("%03d", counter) + "x");
@@ -79,12 +84,24 @@ public class CollaborativeWriter extends Thread {
 		try {
 			//clear the content
 			System.out.println("Clear content");
-			if (OSValidator.isMac()) {
-				e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
-			} else {
-				e.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			Keys delete; //Deletion key name
+			String all; //Key name combined with CTRL or CMD, selects all the content
+			if(lg.equals("fr")){
+				System.out.println("FR");
+				all = "q";
+				delete = Keys.BACK_SPACE;
+			}else{
+				System.out.println("other");
+				all = "a";
+				delete = Keys.DELETE;
+				e.sendKeys(Keys.DELETE);
 			}
-			e.sendKeys(Keys.DELETE);
+			if (OSValidator.isMac()) {
+				e.sendKeys(Keys.chord(Keys.COMMAND, all));
+			} else {
+				e.sendKeys(Keys.chord(Keys.CONTROL, all));
+			}
+			e.sendKeys(delete);
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
@@ -99,17 +116,32 @@ public class CollaborativeWriter extends Thread {
 	}
 
 	public void cancel () {
+		//get current language
+		InputContext context = InputContext.getInstance();
+		String lg = context.getLocale().toString().substring(0,2);
 		//stop writing
 		if (counter < CollaborativeAutomator.TEXT_SIZE - 1) counter = CollaborativeAutomator.TEXT_SIZE - 1;
 		//clear the content
 		System.out.println("Clear content before Writer quit");
 		try {
-			if (OSValidator.isMac()) {
-				e.sendKeys(Keys.chord(Keys.COMMAND, "a"));
-			} else {
-				e.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			Keys delete; //Deletion key name
+			String all; //Key name combined with CTRL or CMD, selects all the content
+			if(lg.equals("fr")){
+				System.out.println("FR");
+				all = "q";
+				delete = Keys.BACK_SPACE;
+			}else{
+				System.out.println("other");
+				all = "a";
+				delete = Keys.DELETE;
+				e.sendKeys(Keys.DELETE);
 			}
-			e.sendKeys(Keys.DELETE);
+			if (OSValidator.isMac()) {
+				e.sendKeys(Keys.chord(Keys.COMMAND, all));
+			} else {
+				e.sendKeys(Keys.chord(Keys.CONTROL, all));
+			}
+			e.sendKeys(delete);
 		} catch (SessionNotFoundException e) {
 			System.out.println("Writer already quit");
 		} catch (Exception e1) {
