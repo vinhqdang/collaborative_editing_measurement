@@ -33,24 +33,26 @@ public class CollaborativeReader extends Thread {
 	
 	//to indicate write the result to file or not
 	protected boolean didWrite = false;
+	protected final int textSize;
 
-	public CollaborativeReader (int n_user, int type_spd, String docUrl, int exp_id) {
+	public CollaborativeReader (int n_user, int type_spd, String docUrl, int exp_id, int textSize) {
 		this.n_user = n_user;
 		this.type_spd = type_spd;
 		this.docURL = docUrl;
 		this.exp_id = exp_id;
 		this.inputElement = null;
+		this.textSize = textSize;
 
-		readTime = new long [CollaborativeAutomator.textSize];
-		getChar = new boolean [CollaborativeAutomator.textSize];
+		readTime = new long [textSize];
+		getChar = new boolean [textSize];
 	}
 
 	@Override
 	public void run () {
 		while (true) {
-			if (counter >= CollaborativeAutomator.textSize / 2) {
+			if (counter >= textSize / 2) {
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
-					for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
+					for (int i = 0; i < textSize; i++) {
 						if (getChar[i] == true) {
 							out.print("R ");
 							out.print(n_user);
@@ -80,7 +82,7 @@ public class CollaborativeReader extends Thread {
 			}
 			String content = null;
 			try {
-				content = inputElement.getText();
+				content = inputElement.getAttribute("value");
 			} catch (StaleElementReferenceException e) {
 				System.out.println("StaleElementReferenceException at Reader");
 				e.printStackTrace();
@@ -89,7 +91,7 @@ public class CollaborativeReader extends Thread {
 			long currentTime = System.currentTimeMillis();
 			for (int i = 0; i < 10; i++) {
 				if (getChar[i] == false) {
-					String findText = "00" + Integer.toString(i);
+					String findText = Integer.toString(i);
 					if (content.indexOf(findText) >= 0) {
 						readTime [i] = currentTime;
 						getChar [i] = true;
@@ -104,7 +106,7 @@ public class CollaborativeReader extends Thread {
 		try {
 			if (didWrite == false) {
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
-					for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
+					for (int i = 0; i < textSize; i++) {
 						if (getChar[i] == true) {
 							out.print("R ");
 							out.print(n_user);

@@ -20,9 +20,9 @@ public class FormicAutomator extends CollaborativeAutomator {
 		super(n_user, type_spd, exp_id, docUrl, textSize, resultFile);
 		n_LocalThread = (n_user < threshold)?n_user:threshold;
 
-		this.reader = new FormicReader(n_user, type_spd, docUrl, exp_id);
+		this.reader = new FormicReader(n_user, type_spd, docUrl, exp_id, textSize);
 		String formicStringId = ((FormicReader)reader).getStringId();
-		this.writer = new FormicWriter(n_user, type_spd, docUrl, exp_id, formicStringId);
+		this.writer = new FormicWriter(n_user, type_spd, docUrl, exp_id, formicStringId, textSize);
 		if (this.n_user > 1) {
 			this.dummies = new FormicDummyWriter [n_user - 1];
 			for (int i = 0; i < n_LocalThread - 1; i++) {
@@ -88,23 +88,15 @@ public class FormicAutomator extends CollaborativeAutomator {
 			System.out.println("Interrupted while waiting the reader finish");
 			e.printStackTrace();
 			//if reader stops, finish all other thread and start a new loop
-			writer.cancel();
-			if (n_user > 1) {
-				for (int i = 0; i < n_user - 1; i++) {
-					dummies [i].cancel();
-				}
-				if (n_user > threshold) {
-					for (int i = 0; i < n_user - threshold; i++) {
-						remoteDummies[i].cancel();
-					}
-				}
-			}
-			return;
+			
 		}
+		stopWriter();
+	}
 
+	private void stopWriter() {
 		//stop dummy threads if needed
 		if (n_user > 1) {
-			for (int i = 0; i < n_LocalThread - 1; i++) {
+			for (int i = 0; i < n_user - 1; i++) {
 				dummies [i].cancel();
 			}
 			if (n_user > threshold) {
@@ -113,7 +105,6 @@ public class FormicAutomator extends CollaborativeAutomator {
 				}
 			}
 		}
-
 		//after reader finish, stop writer
 		writer.cancel();
 	}

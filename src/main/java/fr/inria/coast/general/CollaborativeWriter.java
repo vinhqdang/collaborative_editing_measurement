@@ -31,9 +31,10 @@ public class CollaborativeWriter extends Thread {
 	protected int counter;
 
 	protected WebElement inputElement;
+	protected final int textSize;
 
 	public CollaborativeWriter(int n_user, int type_spd, String docUrl,
-			int exp_id) {
+			int exp_id, int textSize) {
 		// TODO Auto-generated constructor stub
 		this.n_user = n_user;
 		this.type_spd = type_spd;
@@ -41,8 +42,9 @@ public class CollaborativeWriter extends Thread {
 		this.docURL = docUrl;
 		this.exp_id = exp_id;
 		this.inputElement = null;
+		this.textSize = textSize;
 
-		writeTime = new long [CollaborativeAutomator.textSize];
+		writeTime = new long [textSize];
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public class CollaborativeWriter extends Thread {
 		InputContext context = InputContext.getInstance();
 		String lg = context.getLocale().toString().substring(0,2);
 		System.out.println(lg);
-		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {
+		for (counter = 0; counter < textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
 			inputElement.sendKeys(String.format ("%03d", counter) + "x");
 			try {
@@ -62,7 +64,7 @@ public class CollaborativeWriter extends Thread {
 			}
 		}
 		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
-			for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
+			for (int i = 0; i < textSize; i++) {
 				out.print("W ");
 				out.print(n_user);
 				out.print(" ");
@@ -120,7 +122,7 @@ public class CollaborativeWriter extends Thread {
 		InputContext context = InputContext.getInstance();
 		String lg = context.getLocale().toString().substring(0,2);
 		//stop writing
-		if (counter < CollaborativeAutomator.textSize - 1) counter = CollaborativeAutomator.textSize - 1;
+		if (counter < textSize - 1) counter = textSize - 1;
 		//clear the content
 		System.out.println("Clear content before Writer quit");
 		try {

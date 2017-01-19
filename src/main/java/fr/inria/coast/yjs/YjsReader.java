@@ -23,8 +23,8 @@ import fr.inria.coast.general.CollaborativeReader;
  */
 public class YjsReader extends CollaborativeReader {
 
-	public YjsReader(int n_user, int type_spd, String DOC_URL, int exp_id) {
-		super(n_user, type_spd, DOC_URL, exp_id);
+	public YjsReader(int n_user, int type_spd, String DOC_URL, int exp_id, int textSize) {
+		super(n_user, type_spd, DOC_URL, exp_id, textSize);
 		driver = new ChromeDriver();
 		while (this.inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -36,9 +36,9 @@ public class YjsReader extends CollaborativeReader {
 	@Override
 	public void run () {
 		while (true) {
-			if (counter >= CollaborativeAutomator.textSize / 2) {
+			if (counter >= textSize / 2) {
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
-					for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
+					for (int i = 0; i < textSize; i++) {
 						if (getChar[i] == true) {
 							out.print("R ");
 							out.print(n_user);

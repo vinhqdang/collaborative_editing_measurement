@@ -19,8 +19,8 @@ public class FormicReader extends CollaborativeReader {
 
 	private String stringId;
 
-	public FormicReader(int n_user, int type_spd, String docUrl, int exp_id) {
-		super(n_user, type_spd, docUrl, exp_id);
+	public FormicReader(int n_user, int type_spd, String docUrl, int exp_id, int textSize) {
+		super(n_user, type_spd, docUrl, exp_id, textSize);
 		// TODO Auto-generated constructor stub
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

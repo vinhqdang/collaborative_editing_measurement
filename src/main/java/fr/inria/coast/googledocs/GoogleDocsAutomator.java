@@ -20,8 +20,8 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
 		n_LocalThread = (n_user < threshold)?n_user:threshold;
 
-		this.reader = new GoogleDocsReader(n_user, type_spd, DOC_URL, exp_id);
-		this.writer = new GoogleDocsWriter(n_user, type_spd, DOC_URL, exp_id);
+		this.reader = new GoogleDocsReader(n_user, type_spd, DOC_URL, exp_id, TEXT_SIZE);
+		this.writer = new GoogleDocsWriter(n_user, type_spd, DOC_URL, exp_id, TEXT_SIZE);
 		if (this.n_user > 1) {
 			this.dummies = new GoogleDocsDummyWriter [n_user - 1];
 			for (int i = 0; i < n_LocalThread - 1; i++) {

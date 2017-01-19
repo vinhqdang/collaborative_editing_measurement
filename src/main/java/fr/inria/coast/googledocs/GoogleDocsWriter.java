@@ -21,8 +21,8 @@ import fr.inria.coast.general.CollaborativeWriter;
  */
 public class GoogleDocsWriter extends CollaborativeWriter {
 
-	public GoogleDocsWriter(int n_user, int type_spd, String DOC_URL, int exp_id) {
-		super(n_user, type_spd, DOC_URL, exp_id);
+	public GoogleDocsWriter(int n_user, int type_spd, String DOC_URL, int exp_id, int textSize) {
+		super(n_user, type_spd, DOC_URL, exp_id, textSize);
 		// TODO Auto-generated constructor stub
 		driver = new ChromeDriver();
 		while (inputElement == null) {
@@ -34,7 +34,7 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 	
 	@Override
 	public void run () {
-		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {
+		for (counter = 0; counter < textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
 			inputElement.sendKeys(String.format ("%03d", counter) + "x");
 			try {
@@ -45,7 +45,7 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 			}
 		}
 		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
-			for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
+			for (int i = 0; i < textSize; i++) {
 				out.print("W ");
 				out.print(n_user);
 				out.print(" ");

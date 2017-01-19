@@ -22,8 +22,8 @@ public class MUTEAutomator extends CollaborativeAutomator {
 		threshold = 0;
 		n_LocalThread = (n_user < threshold)?n_user:threshold;
 		
-		this.reader = new MUTEReader(n_user, type_spd, DOC_URL, exp_id);
-		this.writer = new MUTEWriter(n_user, type_spd, DOC_URL, exp_id);
+		this.reader = new MUTEReader(n_user, type_spd, DOC_URL, exp_id, TEXT_SIZE);
+		this.writer = new MUTEWriter(n_user, type_spd, DOC_URL, exp_id, TEXT_SIZE);
 		if (this.n_user > 1) {
 			this.dummies = new MUTEDummyWriter [n_user - 1];
 			for (int i = 0; i < n_LocalThread - 1; i++) {

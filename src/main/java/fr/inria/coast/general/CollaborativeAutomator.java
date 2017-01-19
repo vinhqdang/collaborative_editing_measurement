@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CollaborativeAutomator {
-	public static int textSize;
 	public static String resultFile = "result.txt";
 
 	protected CollaborativeWriter writer;
@@ -38,6 +37,8 @@ public class CollaborativeAutomator {
 	//protected final String REMOTE_LAST_ADDR = "152.81.12.192";
 	protected String remoteLastAddress;
 
+	protected final int textSize;
+
 	public CollaborativeAutomator (int n_user, int type_spd, int exp_id, String docUrl, int textSize, String resultFile) {
 		if (OSValidator.isWindows()) {
 			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
@@ -53,7 +54,7 @@ public class CollaborativeAutomator {
 		this.type_spd = type_spd;
 		this.exp_id = exp_id;
 		this.docURL = docUrl;
-		CollaborativeAutomator.textSize = textSize;
+		this.textSize = textSize;
 		CollaborativeAutomator.resultFile = resultFile;				
 		n_LocalThread = (n_user < threshold)?n_user:threshold;
 	}
@@ -135,19 +136,19 @@ public class CollaborativeAutomator {
 		FileReader configReader;
 		File config_file;
 		int numOfLines = 1024;
-
-		config_file = new File (configFileName);
-		configReader = new FileReader (config_file);
-		BufferedReader configBufferedReader = new BufferedReader(configReader);
-
 		String[] remoteAddressesTmp = new String [numOfLines];
 		int[] remoteThreadsTmp = new int [numOfLines];
-		
-		remoteAddresses = new String [numOfLines];
-		remoteThreads = new int [numOfLines];
-
+		BufferedReader configBufferedReader = null;
 		int count = 0;
 		try {
+			config_file = new File (this.getClass().getResource("/"+configFileName).toURI());
+			configReader = new FileReader (config_file);
+			configBufferedReader = new BufferedReader(configReader);
+	
+			
+			remoteAddresses = new String [numOfLines];
+			remoteThreads = new int [numOfLines];
+	
 			while ((configLine = configBufferedReader.readLine()) != null) {
 				String[] lines = configLine.split(" ");
 				if (lines.length >= 2) {
@@ -167,10 +168,10 @@ public class CollaborativeAutomator {
 
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if(configBufferedReader != null) configBufferedReader.close();
 		}
-		configBufferedReader.close();
 		for (int i = 0; i < count; i++) {
 			remoteAddresses [i] = remoteAddressesTmp[i];
 			remoteThreads [i] = remoteThreadsTmp [i];

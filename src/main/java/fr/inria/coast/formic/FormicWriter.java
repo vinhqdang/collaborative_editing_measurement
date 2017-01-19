@@ -22,9 +22,8 @@ import fr.inria.coast.general.CollaborativeWriter;
  */
 public class FormicWriter extends CollaborativeWriter {
 
-	public FormicWriter(int n_user, int type_spd, String docUrl, int exp_id, String formicStringId) {
-		super(n_user, type_spd, docUrl, exp_id);
-		// TODO Auto-generated constructor stub
+	public FormicWriter(int n_user, int type_spd, String docUrl, int exp_id, String formicStringId, int textSize) {
+		super(n_user, type_spd, docUrl, exp_id, textSize);
 		driver = new ChromeDriver();
 		while (inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -42,9 +41,10 @@ public class FormicWriter extends CollaborativeWriter {
 
 	@Override
 	public void run () {
-		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {
+		for (counter = 0; counter < textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
-			inputElement.sendKeys(String.format ("%03d", counter) + "x");
+			String textToType = counter + "x";
+			inputElement.sendKeys(textToType);
 			try {
 				sleep(delay);
 			} catch (InterruptedException e1) {
@@ -53,7 +53,7 @@ public class FormicWriter extends CollaborativeWriter {
 			}
 		}
 		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
-			for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
+			for (int i = 0; i < textSize; i++) {
 				out.print("W ");
 				out.print(n_user);
 				out.print(" ");

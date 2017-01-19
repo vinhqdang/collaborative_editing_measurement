@@ -34,7 +34,7 @@ public class Main {
 		for (int i = 0; i < numberOfUsersPerRun.length; i++) {
 			//int n_user = n_users [n_users.length - 1 - i];
 			int usersThisRun = numberOfUsersPerRun [i];
-			for (int type_spd = 1; type_spd <= 10; type_spd++) {
+			for (int type_spd = 1; type_spd <= 1; type_spd++) {
 				for (int exp_id = 1; exp_id < 5; exp_id++) {
 					if (type_spd != 1 && type_spd % 2 != 0 && type_spd != 5) {
 						System.out.println("Skipping type speed " + type_spd);
@@ -58,7 +58,7 @@ public class Main {
 						info [1] = type_spd;
 						info [2] = exp_id;
 						Helper.saveLastExpInfo("last_exp_info.txt", info);
-						System.out.println("Finished Google: " + usersThisRun + " " + type_spd + " " + exp_id);
+						System.out.println("Finished formic: " + usersThisRun + " " + type_spd + " " + exp_id);
 						System.gc();
 						if (exp_id % 5 == 0) {
 							Thread.sleep(150000);

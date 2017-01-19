@@ -15,8 +15,8 @@ import fr.inria.coast.general.CollaborativeReader;
  */
 public class CryptpadReader extends CollaborativeReader {
 
-	public CryptpadReader(int n_user, int type_spd, String DOC_URL, int exp_id) {
-		super(n_user, type_spd, DOC_URL, exp_id);
+	public CryptpadReader(int n_user, int type_spd, String DOC_URL, int exp_id, int textSize) {
+		super(n_user, type_spd, DOC_URL, exp_id, textSize);
 		// TODO Auto-generated constructor stub
 		this.driver = new ChromeDriver();
 		while (this.inputElement == null) {

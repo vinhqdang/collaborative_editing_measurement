@@ -25,8 +25,8 @@ public class YjsAutomator extends CollaborativeAutomator {
 			threshold = 5;
 			n_LocalThread = (n_user < threshold)?n_user:threshold;
 			
-			this.reader = new YjsReader(n_user, type_spd, DOC_URL, exp_id);
-			this.writer = new YjsWriter(n_user, type_spd, DOC_URL, exp_id);
+			this.reader = new YjsReader(n_user, type_spd, DOC_URL, exp_id, textSize);
+			this.writer = new YjsWriter(n_user, type_spd, DOC_URL, exp_id, textSize);
 			if (this.n_user > 1) {
 				this.dummies = new YjsDummyWriter [n_user - 1];
 				for (int i = 0; i < n_LocalThread - 1; i++) {

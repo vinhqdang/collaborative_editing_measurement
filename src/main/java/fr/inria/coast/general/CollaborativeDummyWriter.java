@@ -18,7 +18,7 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 
 	public CollaborativeDummyWriter(int n_user, int type_spd, String docUrl,
 			int exp_id) {
-		super(n_user, type_spd, docUrl, exp_id);
+		super(n_user, type_spd, docUrl, exp_id, 0);
 		// TODO Auto-generated constructor stub
 		shouldWrite = true;
 		this.inputElement = null;
