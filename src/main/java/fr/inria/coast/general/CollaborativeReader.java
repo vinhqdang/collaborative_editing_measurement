@@ -34,23 +34,23 @@ public class CollaborativeReader extends Thread {
 	//to indicate write the result to file or not
 	protected boolean didWrite = false;
 
-	public CollaborativeReader (int n_user, int type_spd, String DOC_URL, int exp_id) {
+	public CollaborativeReader (int n_user, int type_spd, String docUrl, int exp_id) {
 		this.n_user = n_user;
 		this.type_spd = type_spd;
-		this.docURL = DOC_URL;
+		this.docURL = docUrl;
 		this.exp_id = exp_id;
 		this.e = null;
 
-		readTime = new long [CollaborativeAutomator.TEXT_SIZE];
-		getChar = new boolean [CollaborativeAutomator.TEXT_SIZE];
+		readTime = new long [CollaborativeAutomator.textSize];
+		getChar = new boolean [CollaborativeAutomator.textSize];
 	}
 
 	@Override
 	public void run () {
 		while (true) {
-			if (counter >= CollaborativeAutomator.TEXT_SIZE / 2) {
-				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.RESULT_FILE, true)))) {
-					for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
+			if (counter >= CollaborativeAutomator.textSize / 2) {
+				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
+					for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
 						if (getChar[i] == true) {
 							out.print("R ");
 							out.print(n_user);
@@ -103,8 +103,8 @@ public class CollaborativeReader extends Thread {
 	public void cancel () {
 		try {
 			if (didWrite == false) {
-				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.RESULT_FILE, true)))) {
-					for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
+				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
+					for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
 						if (getChar[i] == true) {
 							out.print("R ");
 							out.print(n_user);

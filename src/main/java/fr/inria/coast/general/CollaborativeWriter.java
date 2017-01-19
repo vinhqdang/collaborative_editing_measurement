@@ -32,17 +32,17 @@ public class CollaborativeWriter extends Thread {
 
 	protected WebElement e;
 
-	public CollaborativeWriter(int n_user, int type_spd, String DOC_URL,
+	public CollaborativeWriter(int n_user, int type_spd, String docUrl,
 			int exp_id) {
 		// TODO Auto-generated constructor stub
 		this.n_user = n_user;
 		this.type_spd = type_spd;
 		this.delay = 1000 / this.type_spd;
-		this.docURL = DOC_URL;
+		this.docURL = docUrl;
 		this.exp_id = exp_id;
 		this.e = null;
 
-		writeTime = new long [CollaborativeAutomator.TEXT_SIZE];
+		writeTime = new long [CollaborativeAutomator.textSize];
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class CollaborativeWriter extends Thread {
 		InputContext context = InputContext.getInstance();
 		String lg = context.getLocale().toString().substring(0,2);
 		System.out.println(lg);
-		for (counter = 0; counter < CollaborativeAutomator.TEXT_SIZE; counter++) {
+		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
 			e.sendKeys(String.format ("%03d", counter) + "x");
 			try {
@@ -61,8 +61,8 @@ public class CollaborativeWriter extends Thread {
 				e1.printStackTrace();
 			}
 		}
-		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.RESULT_FILE, true)))) {
-			for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
+		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
+			for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
 				out.print("W ");
 				out.print(n_user);
 				out.print(" ");
@@ -120,7 +120,7 @@ public class CollaborativeWriter extends Thread {
 		InputContext context = InputContext.getInstance();
 		String lg = context.getLocale().toString().substring(0,2);
 		//stop writing
-		if (counter < CollaborativeAutomator.TEXT_SIZE - 1) counter = CollaborativeAutomator.TEXT_SIZE - 1;
+		if (counter < CollaborativeAutomator.textSize - 1) counter = CollaborativeAutomator.textSize - 1;
 		//clear the content
 		System.out.println("Clear content before Writer quit");
 		try {

@@ -34,7 +34,7 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 	
 	@Override
 	public void run () {
-		for (counter = 0; counter < CollaborativeAutomator.TEXT_SIZE; counter++) {
+		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
 			e.sendKeys(String.format ("%03d", counter) + "x");
 			try {
@@ -44,8 +44,8 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 				e1.printStackTrace();
 			}
 		}
-		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.RESULT_FILE, true)))) {
-			for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
+		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
+			for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
 				out.print("W ");
 				out.print(n_user);
 				out.print(" ");

@@ -5,12 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import sun.security.util.Length;
-
-
 public class CollaborativeAutomator {
-	public static int TEXT_SIZE;
-	public static String RESULT_FILE = "result.txt";
+	public static int textSize;
+	public static String resultFile = "result.txt";
 
 	protected CollaborativeWriter writer;
 	protected CollaborativeReader reader;
@@ -23,10 +20,10 @@ public class CollaborativeAutomator {
 
 	//limit number of thread can run in a host
 	//if more, need to switch to remote driver
-	protected int THRESHOLD;
+	protected int threshold;
 
 	//maximum number of threads run on each remote machine
-	protected int THRESHOLD_REMOTE = 15;
+	protected int thresholdRemote = 15;
 	//number of thread running in local
 	//other will run remotely
 	protected int n_LocalThread;
@@ -34,14 +31,14 @@ public class CollaborativeAutomator {
 	//remote settings
 	//protected String REMOTE_ADDR[] = {"152.81.2.28","152.81.15.203","152.81.15.71","152.81.12.192"};
 	//protected int REMOTE_THREAD[] = {10,15,5,10};
-	protected String REMOTE_ADDR [];
-	protected int REMOTE_THREAD [];
+	protected String remoteAddresses [];
+	protected int remoteThreads [];
 
 	//in case the number of requested exceed the preparation: this server will take care all the remaining request
 	//protected final String REMOTE_LAST_ADDR = "152.81.12.192";
-	protected String REMOTE_LAST_ADDR;
+	protected String remoteLastAddress;
 
-	public CollaborativeAutomator (int n_user, int type_spd, int exp_id, String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
+	public CollaborativeAutomator (int n_user, int type_spd, int exp_id, String docUrl, int textSize, String resultFile) {
 		if (OSValidator.isWindows()) {
 			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		}
@@ -55,10 +52,10 @@ public class CollaborativeAutomator {
 		this.n_user = n_user;
 		this.type_spd = type_spd;
 		this.exp_id = exp_id;
-		this.docURL = DOC_URL;
-		CollaborativeAutomator.TEXT_SIZE = TEXT_SIZE;
-		CollaborativeAutomator.RESULT_FILE = RESULT_FILE;				
-		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
+		this.docURL = docUrl;
+		CollaborativeAutomator.textSize = textSize;
+		CollaborativeAutomator.resultFile = resultFile;				
+		n_LocalThread = (n_user < threshold)?n_user:threshold;
 	}
 
 	public void run () {
@@ -69,8 +66,8 @@ public class CollaborativeAutomator {
 				dummies [i].start();
 			}
 
-			if (n_user > THRESHOLD) {
-				for (int i = 0; i < n_user - THRESHOLD; i++) {
+			if (n_user > threshold) {
+				for (int i = 0; i < n_user - threshold; i++) {
 					System.out.println("Start remote dummy: " + i);
 					remoteDummies[i].start();
 				}
@@ -107,8 +104,8 @@ public class CollaborativeAutomator {
 				for (int i = 0; i < n_user - 1; i++) {
 					dummies [i].cancel();
 				}
-				if (n_user > THRESHOLD) {
-					for (int i = 0; i < n_user - THRESHOLD; i++) {
+				if (n_user > threshold) {
+					for (int i = 0; i < n_user - threshold; i++) {
 						remoteDummies[i].cancel();
 					}
 				}
@@ -121,8 +118,8 @@ public class CollaborativeAutomator {
 			for (int i = 0; i < n_LocalThread - 1; i++) {
 				dummies [i].cancel();
 			}
-			if (n_user > THRESHOLD) {
-				for (int i = 0; i < n_user - THRESHOLD; i++) {
+			if (n_user > threshold) {
+				for (int i = 0; i < n_user - threshold; i++) {
 					remoteDummies[i].cancel();
 				}
 			}
@@ -143,11 +140,11 @@ public class CollaborativeAutomator {
 		configReader = new FileReader (config_file);
 		BufferedReader configBufferedReader = new BufferedReader(configReader);
 
-		String[] REMOTE_ADDR_TMP = new String [numOfLines];
-		int[] REMOTE_THREAD_TMP = new int [numOfLines];
+		String[] remoteAddressesTmp = new String [numOfLines];
+		int[] remoteThreadsTmp = new int [numOfLines];
 		
-		REMOTE_ADDR = new String [numOfLines];
-		REMOTE_THREAD = new int [numOfLines];
+		remoteAddresses = new String [numOfLines];
+		remoteThreads = new int [numOfLines];
 
 		int count = 0;
 		try {
@@ -155,17 +152,17 @@ public class CollaborativeAutomator {
 				String[] lines = configLine.split(" ");
 				if (lines.length >= 2) {
 					if (lines[0].toUpperCase().equals("LOCAL") == true) {
-						THRESHOLD = Integer.parseInt(lines[1]);
+						threshold = Integer.parseInt(lines[1]);
 					}
 					else {
-						REMOTE_ADDR_TMP [count] = lines [0];
+						remoteAddressesTmp [count] = lines [0];
 						int _numThread = Integer.parseInt(lines[1]);
-						REMOTE_THREAD_TMP [count] = _numThread;
+						remoteThreadsTmp [count] = _numThread;
 						count++;
 					}
 				}
 				else if (lines.length == 1) {
-					REMOTE_LAST_ADDR = lines [0];
+					remoteLastAddress = lines [0];
 				}
 
 			}
@@ -175,8 +172,8 @@ public class CollaborativeAutomator {
 		}
 		configBufferedReader.close();
 		for (int i = 0; i < count; i++) {
-			REMOTE_ADDR [i] = REMOTE_ADDR_TMP[i];
-			REMOTE_THREAD [i] = REMOTE_THREAD_TMP [i];
+			remoteAddresses [i] = remoteAddressesTmp[i];
+			remoteThreads [i] = remoteThreadsTmp [i];
 		}
 	}
 }

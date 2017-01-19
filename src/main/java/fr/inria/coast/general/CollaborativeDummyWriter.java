@@ -16,9 +16,9 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
 public class CollaborativeDummyWriter extends CollaborativeWriter {
 	public boolean shouldWrite;
 
-	public CollaborativeDummyWriter(int n_user, int type_spd, String DOC_URL,
+	public CollaborativeDummyWriter(int n_user, int type_spd, String docUrl,
 			int exp_id) {
-		super(n_user, type_spd, DOC_URL, exp_id);
+		super(n_user, type_spd, docUrl, exp_id);
 		// TODO Auto-generated constructor stub
 		shouldWrite = true;
 		this.e = null;

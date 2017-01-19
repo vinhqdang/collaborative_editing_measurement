@@ -18,7 +18,7 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 	public GoogleDocsAutomator(int n_user, int type_spd, int exp_id,
 			String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
 		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
-		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
+		n_LocalThread = (n_user < threshold)?n_user:threshold;
 
 		this.reader = new GoogleDocsReader(n_user, type_spd, DOC_URL, exp_id);
 		this.writer = new GoogleDocsWriter(n_user, type_spd, DOC_URL, exp_id);
@@ -27,16 +27,16 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 			for (int i = 0; i < n_LocalThread - 1; i++) {
 				this.dummies [i] = new GoogleDocsDummyWriter(n_user, type_spd, DOC_URL, exp_id) ;
 			}
-			if (n_user > THRESHOLD) {
-				this.remoteDummies = new GoogleDocsRemoteDummyWriter [n_user - THRESHOLD];
-				for (int i = 0; i < n_user - THRESHOLD; i++) {
+			if (n_user > threshold) {
+				this.remoteDummies = new GoogleDocsRemoteDummyWriter [n_user - threshold];
+				for (int i = 0; i < n_user - threshold; i++) {
 					//depends on the number of requested clients, request from different remote server
-					String remoteURL = REMOTE_LAST_ADDR;
+					String remoteURL = remoteLastAddress;
 					int sum = 0;
-					for (int j = 0; j < REMOTE_THREAD.length; j++) {
-						sum += REMOTE_THREAD [j];
+					for (int j = 0; j < remoteThreads.length; j++) {
+						sum += remoteThreads [j];
 						if (i < sum) {
-							remoteURL = REMOTE_ADDR [j];
+							remoteURL = remoteAddresses [j];
 							break;
 						}
 					}
@@ -55,8 +55,8 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 				dummies [i].start();
 			}
 
-			if (n_user > THRESHOLD) {
-				for (int i = 0; i < n_user - THRESHOLD; i++) {
+			if (n_user > threshold) {
+				for (int i = 0; i < n_user - threshold; i++) {
 					remoteDummies[i].start();
 				}
 			}
@@ -92,8 +92,8 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 				for (int i = 0; i < n_user - 1; i++) {
 					dummies [i].cancel();
 				}
-				if (n_user > THRESHOLD) {
-					for (int i = 0; i < n_user - THRESHOLD; i++) {
+				if (n_user > threshold) {
+					for (int i = 0; i < n_user - threshold; i++) {
 						remoteDummies[i].cancel();
 					}
 				}
@@ -106,8 +106,8 @@ public class GoogleDocsAutomator extends CollaborativeAutomator {
 			for (int i = 0; i < n_LocalThread - 1; i++) {
 				dummies [i].cancel();
 			}
-			if (n_user > THRESHOLD) {
-				for (int i = 0; i < n_user - THRESHOLD; i++) {
+			if (n_user > threshold) {
+				for (int i = 0; i < n_user - threshold; i++) {
 					remoteDummies[i].cancel();
 				}
 			}

@@ -19,8 +19,8 @@ public class MUTEAutomator extends CollaborativeAutomator {
 	public MUTEAutomator(int n_user, int type_spd, int exp_id, String DOC_URL,
 			int TEXT_SIZE, String RESULT_FILE) {
 		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
-		THRESHOLD = 0;
-		n_LocalThread = (n_user < THRESHOLD)?n_user:THRESHOLD;
+		threshold = 0;
+		n_LocalThread = (n_user < threshold)?n_user:threshold;
 		
 		this.reader = new MUTEReader(n_user, type_spd, DOC_URL, exp_id);
 		this.writer = new MUTEWriter(n_user, type_spd, DOC_URL, exp_id);
@@ -29,11 +29,11 @@ public class MUTEAutomator extends CollaborativeAutomator {
 			for (int i = 0; i < n_LocalThread - 1; i++) {
 				this.dummies [i] = new MUTEDummyWriter (n_user, type_spd, DOC_URL, exp_id);
 			}
-			if (n_user > THRESHOLD) {
-				this.remoteDummies = new MUTERemoteDummyWriter [n_user - THRESHOLD];
-				for (int i = 0; i < n_user - THRESHOLD; i++) {
+			if (n_user > threshold) {
+				this.remoteDummies = new MUTERemoteDummyWriter [n_user - threshold];
+				for (int i = 0; i < n_user - threshold; i++) {
 					//depends on the number of requested clients, request from different remote server
-					String remoteURL = REMOTE_LAST_ADDR;
+					String remoteURL = remoteLastAddress;
 					int sum = 0;
 					for (int j = 0; j < REMOTE_THREAD.length; j++) {
 						sum += REMOTE_THREAD [j];

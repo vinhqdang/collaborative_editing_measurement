@@ -22,10 +22,10 @@ public class CryptpadAutomator extends CollaborativeAutomator {
 			for (int i = 0; i < n_LocalThread - 1; i++) {
 				this.dummies [i] = new CryptpadDummyWriter (n_user, type_spd, DOC_URL, exp_id);
 			}
-			if (n_user > THRESHOLD) {
-				this.remoteDummies = new CryptpadRemoteDummyWriter [n_user - THRESHOLD];
-				for (int i = 0; i < n_user - THRESHOLD; i++) {
-					if (i < THRESHOLD_REMOTE) {
+			if (n_user > threshold) {
+				this.remoteDummies = new CryptpadRemoteDummyWriter [n_user - threshold];
+				for (int i = 0; i < n_user - threshold; i++) {
+					if (i < thresholdRemote) {
 						//HP Z400
 						this.remoteDummies [i] = new CryptpadRemoteDummyWriter(n_user, type_spd, DOC_URL, exp_id, "152.81.15.203");
 					} else {

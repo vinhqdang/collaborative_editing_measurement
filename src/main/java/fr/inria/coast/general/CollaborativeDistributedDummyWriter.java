@@ -14,8 +14,8 @@ public class CollaborativeDistributedDummyWriter extends
 	String serverAddr;
 	
 	public CollaborativeDistributedDummyWriter(int n_user, int type_spd,
-			String DOC_URL, int exp_id, String serverAddr) {
-		super(n_user, type_spd, DOC_URL, exp_id);
+			String docUrl, int exp_id, String serverAddr) {
+		super(n_user, type_spd, docUrl, exp_id);
 		this.serverAddr = serverAddr;
 	}
 

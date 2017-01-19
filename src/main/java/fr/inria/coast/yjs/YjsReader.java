@@ -36,9 +36,9 @@ public class YjsReader extends CollaborativeReader {
 	@Override
 	public void run () {
 		while (true) {
-			if (counter >= CollaborativeAutomator.TEXT_SIZE / 2) {
-				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.RESULT_FILE, true)))) {
-					for (int i = 0; i < CollaborativeAutomator.TEXT_SIZE; i++) {
+			if (counter >= CollaborativeAutomator.textSize / 2) {
+				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
+					for (int i = 0; i < CollaborativeAutomator.textSize; i++) {
 						if (getChar[i] == true) {
 							out.print("R ");
 							out.print(n_user);
