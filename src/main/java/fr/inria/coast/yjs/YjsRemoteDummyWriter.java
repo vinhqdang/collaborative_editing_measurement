@@ -29,7 +29,7 @@ public class YjsRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 		
 		remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		remoteDriver.get(DOC_URL);
-		this.e = remoteDriver.findElement(By.id("textfield"));
+		this.inputElement = remoteDriver.findElement(By.id("textfield"));
 	}
 
 }

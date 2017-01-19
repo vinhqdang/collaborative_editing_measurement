@@ -29,7 +29,7 @@ public class MUTERemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 		
 		remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		remoteDriver.get(DOC_URL);
-		this.e = remoteDriver.findElement(By.className("ace_text-input"));
+		this.inputElement = remoteDriver.findElement(By.className("ace_text-input"));
 	}
 
 }

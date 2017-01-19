@@ -21,7 +21,7 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 		super(n_user, type_spd, docUrl, exp_id);
 		// TODO Auto-generated constructor stub
 		shouldWrite = true;
-		this.e = null;
+		this.inputElement = null;
 	}
 	char c = (char) ('a' + new Random ().nextInt(10));
 	public void run () {
@@ -55,17 +55,17 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 		try {
 			int nextStep = new Random().nextInt () % 10;
 			if (nextStep % 5 == 0) {
-				this.e.sendKeys(Keys.DELETE);
+				this.inputElement.sendKeys(Keys.DELETE);
 			} else if (nextStep > 0) {
 				for (int i = 0; i < nextStep; i++) {
-					this.e.sendKeys(Keys.RIGHT);
+					this.inputElement.sendKeys(Keys.RIGHT);
 				}
-				this.e.sendKeys("" + c);
+				this.inputElement.sendKeys("" + c);
 			} else if (nextStep < 0) {
 				for (int i = nextStep; i < 0; i++) {
-					this.e.sendKeys(Keys.LEFT);
+					this.inputElement.sendKeys(Keys.LEFT);
 				}
-				this.e.sendKeys("" + c);
+				this.inputElement.sendKeys("" + c);
 			}
 		} catch (Exception e1) {
 			System.out.println("Exception while sending Keys at Dummy Writer");

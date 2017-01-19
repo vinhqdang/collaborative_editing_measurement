@@ -20,10 +20,10 @@ public class MUTEWriter extends CollaborativeWriter {
 		super(n_user, type_spd, DOC_URL, exp_id);
 		// TODO Auto-generated constructor stub
 		this.driver = new ChromeDriver();
-		while (this.e == null) {
+		while (this.inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get(DOC_URL);
-			this.e = driver.findElement(By.className("ace_text-input"));
+			this.inputElement = driver.findElement(By.className("ace_text-input"));
 		}
 	}
 

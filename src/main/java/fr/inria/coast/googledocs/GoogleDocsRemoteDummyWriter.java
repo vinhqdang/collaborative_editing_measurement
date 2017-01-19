@@ -33,19 +33,19 @@ public class GoogleDocsRemoteDummyWriter extends CollaborativeRemoteDummyWriter 
 		
 		remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		remoteDriver.get(DOC_URL);
-		this.e = remoteDriver.findElement(By.className("docs-texteventtarget-iframe"));
+		this.inputElement = remoteDriver.findElement(By.className("docs-texteventtarget-iframe"));
 	}
 	
 	@Override
 	public void run () {
 		while (shouldWrite) {
-			this.e.sendKeys("" + c);
+			this.inputElement.sendKeys("" + c);
 			int nextStep = new Random().nextInt () / 100;
 			if (nextStep % 10 == 0) {
 				int j = nextStep / 5;
 				while (j != 0) {
 					try {
-						this.e.sendKeys(Keys.DELETE);
+						this.inputElement.sendKeys(Keys.DELETE);
 						j--;
 					} catch (SessionNotFoundException e1) {
 						System.out.println("Remote dummy quited before");

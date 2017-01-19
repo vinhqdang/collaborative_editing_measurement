@@ -25,10 +25,10 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 		super(n_user, type_spd, DOC_URL, exp_id);
 		// TODO Auto-generated constructor stub
 		driver = new ChromeDriver();
-		while (e == null) {
+		while (inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get (DOC_URL);
-			e = driver.findElement(By.className("docs-texteventtarget-iframe"));
+			inputElement = driver.findElement(By.className("docs-texteventtarget-iframe"));
 		}
 	}
 	
@@ -36,7 +36,7 @@ public class GoogleDocsWriter extends CollaborativeWriter {
 	public void run () {
 		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
-			e.sendKeys(String.format ("%03d", counter) + "x");
+			inputElement.sendKeys(String.format ("%03d", counter) + "x");
 			try {
 				sleep(delay);
 			} catch (InterruptedException e1) {

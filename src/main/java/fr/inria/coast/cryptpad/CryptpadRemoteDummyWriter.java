@@ -25,10 +25,10 @@ public class CryptpadRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 		} catch (MalformedURLException e) {
 			System.out.println("Cannot get remoted web driver at URL: " + serverAddr);
 		}
-		while (this.e == null) {
+		while (this.inputElement == null) {
 			remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			remoteDriver.get(DOC_URL);
-			this.e = CryptpadHelper.getWebElement(remoteDriver);
+			this.inputElement = CryptpadHelper.getWebElement(remoteDriver);
 		}
 	}
 

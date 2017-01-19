@@ -19,7 +19,7 @@ public class Main {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		int n_users[] = Helper.loadNumUsers("num_user_setting.txt");
+		int numberOfUsersPerRun[] = Helper.loadNumUsers("num_user_setting.txt");
 
 		int [] lastExpInfo = Helper.loadLastExpInfo("last_exp_info.txt"); 
 		
@@ -29,21 +29,22 @@ public class Main {
 		
 		String out_file = "googledocs.txt";
 		
-		for (int i = 0; i < n_users.length; i++) {
+		for (int i = 0; i < numberOfUsersPerRun.length; i++) {
 			//int n_user = n_users [n_users.length - 1 - i];
-			int n_user = n_users [i];
+			int usersThisRun = numberOfUsersPerRun [i];
 			for (int type_spd = 1; type_spd <= 10; type_spd++) {
-				for (int exp_id = 1; exp_id <= 3; exp_id += 1) {
+				for (int exp_id = 1; exp_id < 5; exp_id++) {
 					if (type_spd != 1 && type_spd % 2 != 0 && type_spd != 5) {
+						System.out.println("Skipping type speed " + type_spd);
 						continue;
 					}
 					//only test with type speed 1 with 40 and 50 users
-					if (n_user >= 40 && type_spd != 1) continue;
+					if (usersThisRun >= 40 && type_spd != 1) continue;
 					
 					//continue from last time
-					if (n_user < last_user || (n_user == last_user && type_spd < last_type || (n_user == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
+					if (usersThisRun < last_user || (usersThisRun == last_user && type_spd < last_type || (usersThisRun == last_user && type_spd == last_type && exp_id <= last_exp))) continue;
 
-					System.out.println ("Running Google Docs: " + n_user + " " + type_spd + " " + exp_id);
+					System.out.println ("Running Google Docs: " + usersThisRun + " " + type_spd + " " + exp_id);
 					
 					String DOC_URLS[] = new String[5];
 
@@ -53,15 +54,15 @@ public class Main {
 					DOC_URLS[3] = "https://docs.google.com/document/d/11lKlnwp_EFebu8Yim1b38hkBcPtCx7sH2QsxrilvPIM/edit?usp=sharing";
 					DOC_URLS[4] = "https://docs.google.com/document/d/1eRtWpIjEJ9FFnK4YFCeNCqA1_KVB_xldTAY5CI5yy5s/edit?usp=sharing";
 
-					GoogleDocsAutomator automator = new GoogleDocsAutomator(n_user, type_spd, exp_id, DOC_URLS[exp_id%DOC_URLS.length], 10, out_file);
+					GoogleDocsAutomator automator = new GoogleDocsAutomator(usersThisRun, type_spd, exp_id, DOC_URLS[exp_id%DOC_URLS.length], 10, out_file);
 					automator. run();
 					try {
 						int [] info = new int [3];
-						info [0] = n_user;
+						info [0] = usersThisRun;
 						info [1] = type_spd;
 						info [2] = exp_id;
 						Helper.saveLastExpInfo("last_exp_info.txt", info);
-						System.out.println("Finished Google: " + n_user + " " + type_spd + " " + exp_id);
+						System.out.println("Finished Google: " + usersThisRun + " " + type_spd + " " + exp_id);
 						System.gc();
 						if (exp_id % 5 == 0) {
 							Thread.sleep(150000);

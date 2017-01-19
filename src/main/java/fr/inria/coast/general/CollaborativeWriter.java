@@ -30,7 +30,7 @@ public class CollaborativeWriter extends Thread {
 	protected long writeTime [];
 	protected int counter;
 
-	protected WebElement e;
+	protected WebElement inputElement;
 
 	public CollaborativeWriter(int n_user, int type_spd, String docUrl,
 			int exp_id) {
@@ -40,7 +40,7 @@ public class CollaborativeWriter extends Thread {
 		this.delay = 1000 / this.type_spd;
 		this.docURL = docUrl;
 		this.exp_id = exp_id;
-		this.e = null;
+		this.inputElement = null;
 
 		writeTime = new long [CollaborativeAutomator.textSize];
 	}
@@ -53,7 +53,7 @@ public class CollaborativeWriter extends Thread {
 		System.out.println(lg);
 		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
-			e.sendKeys(String.format ("%03d", counter) + "x");
+			inputElement.sendKeys(String.format ("%03d", counter) + "x");
 			try {
 				sleep(delay);
 			} catch (InterruptedException e1) {
@@ -94,14 +94,14 @@ public class CollaborativeWriter extends Thread {
 				System.out.println("other");
 				all = "a";
 				delete = Keys.DELETE;
-				e.sendKeys(Keys.DELETE);
+				inputElement.sendKeys(Keys.DELETE);
 			}
 			if (OSValidator.isMac()) {
-				e.sendKeys(Keys.chord(Keys.COMMAND, all));
+				inputElement.sendKeys(Keys.chord(Keys.COMMAND, all));
 			} else {
-				e.sendKeys(Keys.chord(Keys.CONTROL, all));
+				inputElement.sendKeys(Keys.chord(Keys.CONTROL, all));
 			}
-			e.sendKeys(delete);
+			inputElement.sendKeys(delete);
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
@@ -134,14 +134,14 @@ public class CollaborativeWriter extends Thread {
 				System.out.println("other");
 				all = "a";
 				delete = Keys.DELETE;
-				e.sendKeys(Keys.DELETE);
+				inputElement.sendKeys(Keys.DELETE);
 			}
 			if (OSValidator.isMac()) {
-				e.sendKeys(Keys.chord(Keys.COMMAND, all));
+				inputElement.sendKeys(Keys.chord(Keys.COMMAND, all));
 			} else {
-				e.sendKeys(Keys.chord(Keys.CONTROL, all));
+				inputElement.sendKeys(Keys.chord(Keys.CONTROL, all));
 			}
-			e.sendKeys(delete);
+			inputElement.sendKeys(delete);
 		} catch (SessionNotFoundException e) {
 			System.out.println("Writer already quit");
 		} catch (Exception e1) {

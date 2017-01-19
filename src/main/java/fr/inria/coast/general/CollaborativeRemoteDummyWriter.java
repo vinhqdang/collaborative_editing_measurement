@@ -24,7 +24,7 @@ public class CollaborativeRemoteDummyWriter extends CollaborativeDummyWriter{
 		super(n_user, type_spd, docUrl, exp_id);
 		// TODO Auto-generated constructor stub
 		this.serverAddr = serverAddr;
-		this.e = null;
+		this.inputElement = null;
 		this.capabilities = new DesiredCapabilities();
 		this.capabilities.setBrowserName("chrome");
 		this.remoteDriver = null;

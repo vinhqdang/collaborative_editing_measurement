@@ -17,10 +17,10 @@ public class EtherpadDummyWriter extends CollaborativeDummyWriter {
 			int exp_id) {
 		super(n_user, type_spd, DOC_URL, exp_id);
 		// TODO Auto-generated constructor stub
-		while (this.e == null) {
+		while (this.inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get(DOC_URL);
-			this.e = EtherpadHelper.getContentElement(driver);
+			this.inputElement = EtherpadHelper.getContentElement(driver);
 		}
 	}
 
