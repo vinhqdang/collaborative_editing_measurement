@@ -50,7 +50,7 @@ public class CollaborativeReader extends Thread {
 	@Override
 	public void run () {
 		while (true) {
-			if (counter >= textSize / 2) {
+			if (counter >= textSize) {
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
 					for (int i = 0; i < textSize; i++) {
 						if (getChar[i] == true) {
