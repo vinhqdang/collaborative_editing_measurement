@@ -15,18 +15,21 @@ import java.io.PrintWriter;
  */
 public class Helper {
 	/*
-	 * loading the last experiment information, so we can start from the last time
+	 * loading the last experiment information, so we can start from the last
+	 * time
 	 */
-	public static int[] loadLastExpInfo (String lastExpFileName) throws IOException {
+	public static int[] loadLastExpInfo(String lastExpFileName) throws IOException {
 		int num_user = 0;
 		int type_spd = 0;
 		int exp_id = 0;
 		String line;
-		File lastExpFile = new File (lastExpFileName);
-		FileReader expFileReader = new FileReader (lastExpFile);
-		BufferedReader expBufferedReader = new BufferedReader(expFileReader);
-
+		BufferedReader expBufferedReader = null;
 		try {
+		File lastExpFile = new File(Helper.class.getResource("/"+lastExpFileName).toURI());
+		FileReader expFileReader = new FileReader(lastExpFile);
+		expBufferedReader = new BufferedReader(expFileReader);
+
+		
 			while ((line = expBufferedReader.readLine()) != null) {
 				String[] lines = line.split(" ");
 				if (lines.length >= 2) {
@@ -43,52 +46,57 @@ public class Helper {
 
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if(expBufferedReader != null) expBufferedReader.close();
 		}
-		expBufferedReader.close();
-		int [] res = new int[3];
+		int[] res = new int[3];
 		res[0] = num_user;
 		res[1] = type_spd;
 		res[2] = exp_id;
 		return res;
 	}
+
 	/*
 	 * writing the last experiment info to the file, so we can load
 	 */
-	public static void saveLastExpInfo (String fileName, int[] info) throws IOException {
-		if (info.length < 3) return;
-		File file = new File (fileName);
+	public static void saveLastExpInfo(String fileName, int[] info) throws IOException {
+		if (info.length < 3)
+			return;
+		File file = new File(fileName);
 		PrintWriter writer = new PrintWriter(file);
 		writer.println("NUM_USER " + info[0]);
 		writer.println("TYPE_SPD " + info[1]);
 		writer.println("EXP_ID " + info[2]);
-		writer.close ();
+		writer.close();
 	}
-	
+
 	/*
 	 * load number of users
 	 */
-	public static int[] loadNumUsers (String fileName) throws IOException {
-		File file = new File (fileName);
-		FileReader fileReader = new FileReader (file);
-		BufferedReader bufferedReader = new BufferedReader (fileReader);
-		String line;
+	public static int[] loadNumUsers(String fileName) throws IOException {
+		File file;
+		BufferedReader bufferedReader = null;
 		try {
+			file = new File(Helper.class.getResource("/"+fileName).toURI());
+			FileReader fileReader = new FileReader(file);
+			bufferedReader = new BufferedReader(fileReader);
+			String line;
 			if ((line = bufferedReader.readLine()) != null) {
-				String [] tmp_res = line.split (" ");
-				int [] res = new int [tmp_res.length];
+				String[] tmp_res = line.split(" ");
+				int[] res = new int[tmp_res.length];
 				for (int i = 0; i < tmp_res.length; i++) {
-					res [i] = Integer.parseInt(tmp_res[i]);
+					res[i] = Integer.parseInt(tmp_res[i]);
 				}
-				bufferedReader.close ();
+				bufferedReader.close();
 				return res;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if(bufferedReader != null) bufferedReader.close();
 		}
 		return null;
-		
+
 	}
 }
