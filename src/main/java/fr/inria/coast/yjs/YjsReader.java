@@ -26,10 +26,10 @@ public class YjsReader extends CollaborativeReader {
 	public YjsReader(int n_user, int type_spd, String DOC_URL, int exp_id) {
 		super(n_user, type_spd, DOC_URL, exp_id);
 		driver = new ChromeDriver();
-		while (this.e == null) {
+		while (this.inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get(DOC_URL);
-			this.e = driver.findElement(By.id("textfield"));
+			this.inputElement = driver.findElement(By.id("textfield"));
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class YjsReader extends CollaborativeReader {
 			}
 			String content = null;
 			try {
-				content = e.getAttribute("value");
+				content = inputElement.getAttribute("value");
 			} catch (StaleElementReferenceException e) {
 				System.out.println("StaleElementReferenceException at Reader");
 				e.printStackTrace();

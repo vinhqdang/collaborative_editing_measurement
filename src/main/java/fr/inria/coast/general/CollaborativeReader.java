@@ -29,7 +29,7 @@ public class CollaborativeReader extends Thread {
 	protected boolean getChar [];
 	protected int counter;
 
-	protected WebElement e;
+	protected WebElement inputElement;
 	
 	//to indicate write the result to file or not
 	protected boolean didWrite = false;
@@ -39,7 +39,7 @@ public class CollaborativeReader extends Thread {
 		this.type_spd = type_spd;
 		this.docURL = docUrl;
 		this.exp_id = exp_id;
-		this.e = null;
+		this.inputElement = null;
 
 		readTime = new long [CollaborativeAutomator.textSize];
 		getChar = new boolean [CollaborativeAutomator.textSize];
@@ -80,7 +80,7 @@ public class CollaborativeReader extends Thread {
 			}
 			String content = null;
 			try {
-				content = e.getText();
+				content = inputElement.getText();
 			} catch (StaleElementReferenceException e) {
 				System.out.println("StaleElementReferenceException at Reader");
 				e.printStackTrace();
