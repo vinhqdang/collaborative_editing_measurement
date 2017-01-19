@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import fr.inria.coast.general.CollaborativeDummyWriter;
@@ -17,16 +18,23 @@ import fr.inria.coast.general.CollaborativeDummyWriter;
  *
  */
 public class FormicDummyWriter extends CollaborativeDummyWriter {
-	public FormicDummyWriter(int n_user, int type_spd, String DOC_URL,
-			int exp_id) {
-		super(n_user, type_spd, DOC_URL, exp_id);
+	public FormicDummyWriter(int n_user, int type_spd, String docUrl,
+			int exp_id, String formicStringId) {
+		super(n_user, type_spd, docUrl, exp_id);
 		// TODO Auto-generated constructor stub
 		this.driver = new ChromeDriver();
 		while (this.inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.get(DOC_URL);
-			this.inputElement = driver.findElement(By.className("docs-texteventtarget-iframe"));
+			driver.get(docUrl);
+			subscribeForFormicString(formicStringId);
+			this.inputElement = driver.findElement(By.className("stringInput"));
 		}
+	}
+	
+	private void subscribeForFormicString(String formicStringId) {
+		WebElement subscribeInput = driver.findElement(By.id("subscribe-id"));
+		subscribeInput.sendKeys(formicStringId);
+		driver.findElement(By.id("subscribe-button")).click();
 	}
 	
 	@Override

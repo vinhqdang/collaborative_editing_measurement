@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionNotFoundException;
 
@@ -23,8 +24,8 @@ import fr.inria.coast.general.CollaborativeRemoteDummyWriter;
 public class FormicRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 	char c = (char) ('a' + new Random ().nextInt(15));
 	public FormicRemoteDummyWriter(int n_user, int type_spd,
-			String DOC_URL, int exp_id, String serverAddr) {
-		super(n_user, type_spd, DOC_URL, exp_id, serverAddr);
+			String docUrl, int exp_id, String serverAddr, String formicStringId) {
+		super(n_user, type_spd, docUrl, exp_id, serverAddr);
 		try {
 			this.remoteDriver = new RemoteWebDriver(new URL ("http://" + serverAddr + ":4444/wd/hub"), capabilities);
 		} catch (MalformedURLException e) {
@@ -32,8 +33,15 @@ public class FormicRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 		}
 		
 		remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		remoteDriver.get(DOC_URL);
+		remoteDriver.get(docUrl);
+		subscribeForFormicString(formicStringId);
 		this.inputElement = remoteDriver.findElement(By.className("docs-texteventtarget-iframe"));
+	}
+	
+	private void subscribeForFormicString(String formicStringId) {
+		WebElement subscribeInput = driver.findElement(By.id("subscribe-id"));
+		subscribeInput.sendKeys(formicStringId);
+		driver.findElement(By.id("subscribe-button")).click();
 	}
 	
 	@Override

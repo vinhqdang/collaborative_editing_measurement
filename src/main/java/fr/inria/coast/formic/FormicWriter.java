@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import fr.inria.coast.general.CollaborativeAutomator;
@@ -21,17 +22,24 @@ import fr.inria.coast.general.CollaborativeWriter;
  */
 public class FormicWriter extends CollaborativeWriter {
 
-	public FormicWriter(int n_user, int type_spd, String DOC_URL, int exp_id) {
-		super(n_user, type_spd, DOC_URL, exp_id);
+	public FormicWriter(int n_user, int type_spd, String docUrl, int exp_id, String formicStringId) {
+		super(n_user, type_spd, docUrl, exp_id);
 		// TODO Auto-generated constructor stub
 		driver = new ChromeDriver();
 		while (inputElement == null) {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.get (DOC_URL);
-			inputElement = driver.findElement(By.className("docs-texteventtarget-iframe"));
+			driver.get (docUrl);
+			subscribeForFormicString(formicStringId);
+			inputElement = driver.findElement(By.className("stringInput"));
 		}
 	}
 	
+	private void subscribeForFormicString(String formicStringId) {
+		WebElement subscribeInput = driver.findElement(By.id("subscribe-id"));
+		subscribeInput.sendKeys(formicStringId);
+		driver.findElement(By.id("subscribe-button")).click();
+	}
+
 	@Override
 	public void run () {
 		for (counter = 0; counter < CollaborativeAutomator.textSize; counter++) {

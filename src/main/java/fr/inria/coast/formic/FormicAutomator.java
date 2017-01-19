@@ -16,16 +16,17 @@ public class FormicAutomator extends CollaborativeAutomator {
 	//protected int REMOTE_THREAD[] = {15,15,10,10};
 
 	public FormicAutomator(int n_user, int type_spd, int exp_id,
-			String DOC_URL, int TEXT_SIZE, String RESULT_FILE) {
-		super(n_user, type_spd, exp_id, DOC_URL, TEXT_SIZE, RESULT_FILE);
+			String docUrl, int textSize, String resultFile) {
+		super(n_user, type_spd, exp_id, docUrl, textSize, resultFile);
 		n_LocalThread = (n_user < threshold)?n_user:threshold;
 
-		this.reader = new FormicReader(n_user, type_spd, DOC_URL, exp_id);
-		this.writer = new FormicWriter(n_user, type_spd, DOC_URL, exp_id);
+		this.reader = new FormicReader(n_user, type_spd, docUrl, exp_id);
+		String formicStringId = ((FormicReader)reader).getStringId();
+		this.writer = new FormicWriter(n_user, type_spd, docUrl, exp_id, formicStringId);
 		if (this.n_user > 1) {
 			this.dummies = new FormicDummyWriter [n_user - 1];
 			for (int i = 0; i < n_LocalThread - 1; i++) {
-				this.dummies [i] = new FormicDummyWriter(n_user, type_spd, DOC_URL, exp_id) ;
+				this.dummies [i] = new FormicDummyWriter(n_user, type_spd, docUrl, exp_id, formicStringId) ;
 			}
 			if (n_user > threshold) {
 				this.remoteDummies = new FormicRemoteDummyWriter [n_user - threshold];
@@ -40,7 +41,7 @@ public class FormicAutomator extends CollaborativeAutomator {
 							break;
 						}
 					}
-					this.remoteDummies [i] = new FormicRemoteDummyWriter(n_user, type_spd, DOC_URL, exp_id, remoteURL);
+					this.remoteDummies [i] = new FormicRemoteDummyWriter(n_user, type_spd, docUrl, exp_id, remoteURL, formicStringId);
 				}
 			}
 		}
