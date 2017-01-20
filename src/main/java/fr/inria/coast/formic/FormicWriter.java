@@ -43,7 +43,7 @@ public class FormicWriter extends CollaborativeWriter {
 	public void run () {
 		for (counter = 0; counter < textSize; counter++) {
 			writeTime[counter] = System.currentTimeMillis();
-			String textToType = counter + "x";
+			String textToType = String.format ("%03d", counter) + "x";
 			inputElement.sendKeys(textToType);
 			try {
 				sleep(delay);
