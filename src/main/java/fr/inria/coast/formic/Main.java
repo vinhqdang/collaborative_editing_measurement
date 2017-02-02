@@ -48,7 +48,7 @@ public class Main {
 
 					System.out.println ("Running formic: " + usersThisRun + " " + type_spd + " " + exp_id);
 					
-					String documentUrl = "localhost:8080/index"; //FIXME
+					String documentUrl = "http://10.200.1.67:80/index"; //FIXME
 					
 					FormicAutomator automator = new FormicAutomator(usersThisRun, type_spd, exp_id, documentUrl, TEXT_SIZE, out_file);
 					automator. run();
