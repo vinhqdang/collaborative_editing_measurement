@@ -5,6 +5,7 @@ package fr.inria.coast.general;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -25,8 +26,9 @@ public class Helper {
 		String line;
 		BufferedReader expBufferedReader = null;
 		try {
-			InputStreamReader s = new InputStreamReader(Helper.class.getResourceAsStream("/"+lastExpFileName));
-			expBufferedReader = new BufferedReader(s);
+			File lastExpFile = new File (lastExpFileName);
+			FileReader expFileReader = new FileReader (lastExpFile);
+			expBufferedReader = new BufferedReader(expFileReader);
 		
 			while ((line = expBufferedReader.readLine()) != null) {
 				String[] lines = line.split(" ");
