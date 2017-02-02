@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import fr.inria.coast.general.CollaborativeReader;
 
@@ -21,7 +23,6 @@ public class FormicReader extends CollaborativeReader {
 
 	public FormicReader(int n_user, int type_spd, String docUrl, int exp_id, int textSize) {
 		super(n_user, type_spd, docUrl, exp_id, textSize);
-		// TODO Auto-generated constructor stub
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get(docUrl);
@@ -33,6 +34,8 @@ public class FormicReader extends CollaborativeReader {
 	 * Because the reader is the first one that is initialized, it has to create the formic string.
 	 */
 	private void createNewFormicString() {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("new-string-button")));
 		driver.findElement(By.id("new-string-button")).click();
 		WebElement input = driver.findElement(By.className("stringInput"));
 		this.stringId = input.getAttribute("id");
