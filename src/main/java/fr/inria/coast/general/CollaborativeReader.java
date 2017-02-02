@@ -50,7 +50,7 @@ public class CollaborativeReader extends Thread {
 	@Override
 	public void run () {
 		while (true) {
-			if (counter >= textSize) {
+			if (counter >= textSize / 2) {
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CollaborativeAutomator.resultFile, true)))) {
 					for (int i = 0; i < textSize; i++) {
 						if (getChar[i] == true) {
@@ -91,7 +91,7 @@ public class CollaborativeReader extends Thread {
 			long currentTime = System.currentTimeMillis();
 			for (int i = 0; i < 10; i++) {
 				if (getChar[i] == false) {
-					String findText = Integer.toString(i);
+					String findText = "00" + Integer.toString(i);
 					if (content.indexOf(findText) >= 0) {
 						readTime [i] = currentTime;
 						getChar [i] = true;
