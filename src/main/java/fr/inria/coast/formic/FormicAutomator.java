@@ -3,6 +3,8 @@
  */
 package fr.inria.coast.formic;
 
+import java.util.logging.Logger;
+
 import fr.inria.coast.general.CollaborativeAutomator;
 
 /**
@@ -49,6 +51,7 @@ public class FormicAutomator extends CollaborativeAutomator {
 
 	@Override
 	public void run () {
+		Logger.getLogger(this.getClass().getName()).info("Automator starting");
 		//start dummy writer if needed
 		if (n_user > 1) {
 			//start local dummy writer
@@ -82,18 +85,20 @@ public class FormicAutomator extends CollaborativeAutomator {
 		//wait for reader finish
 		//i.e, read all modification
 		try {
+			System.out.println("wait for reader to finish");
 			reader.join(120000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Interrupted while waiting the reader finish");
 			e.printStackTrace();
 			//if reader stops, finish all other thread and start a new loop
 			
 		}
 		stopWriter();
+		reader.cancel();
 	}
 
 	private void stopWriter() {
+		Logger.getLogger(this.getClass().getName()).info("Stopping writer");
 		//stop dummy threads if needed
 		if (n_user > 1) {
 			for (int i = 0; i < n_user - 1; i++) {

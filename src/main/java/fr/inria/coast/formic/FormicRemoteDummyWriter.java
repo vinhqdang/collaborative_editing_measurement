@@ -33,6 +33,7 @@ public class FormicRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 		}
 		
 		remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 		remoteDriver.get(docUrl);
 		subscribeForFormicString(formicStringId);
 		this.inputElement = remoteDriver.findElement(By.className("docs-texteventtarget-iframe"));
@@ -53,7 +54,7 @@ public class FormicRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 				int j = nextStep / 5;
 				while (j != 0) {
 					try {
-						this.inputElement.sendKeys(Keys.DELETE);
+						this.inputElement.sendKeys(Keys.BACK_SPACE);
 						j--;
 					} catch (SessionNotFoundException e1) {
 						System.out.println("Remote dummy quited before");

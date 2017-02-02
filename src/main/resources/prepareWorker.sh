@@ -11,3 +11,5 @@ sudo apt-get --yes install xvfb
 /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16
 curl http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar -o selenium-server-standalone-3.0.1.jar
 sudo chmod 777 selenium-server-standalone-3.0.1.jar
+#to avoid chrome hanging
+export DBUS_SESSION_BUS_ADDRESS=/dev/null

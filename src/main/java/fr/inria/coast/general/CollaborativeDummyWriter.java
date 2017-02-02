@@ -4,26 +4,33 @@
 package fr.inria.coast.general;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.remote.SessionNotFoundException;
 import org.openqa.selenium.remote.UnreachableBrowserException;
+
+import fr.inria.coast.formic.FormicDummyWriter;
 
 /**
  * @author "Quang-Vinh DANG"
  *
  */
 public class CollaborativeDummyWriter extends CollaborativeWriter {
+	
+	protected static final Logger LOG = Logger.getLogger(FormicDummyWriter.class.getName());
+	
 	public boolean shouldWrite;
+	
+	char c = (char) ('a' + new Random ().nextInt(10));
 
 	public CollaborativeDummyWriter(int n_user, int type_spd, String docUrl,
 			int exp_id) {
 		super(n_user, type_spd, docUrl, exp_id, 0);
-		// TODO Auto-generated constructor stub
 		shouldWrite = true;
 		this.inputElement = null;
 	}
-	char c = (char) ('a' + new Random ().nextInt(10));
+	
 	public void run () {
 		while (shouldWrite) {
 			dummyType ();
@@ -39,6 +46,7 @@ public class CollaborativeDummyWriter extends CollaborativeWriter {
 
 	public void cancel () {
 		try {
+			LOG.info("Dummy cancelled");
 			shouldWrite = false;
 			driver.quit ();
 		} catch (SessionNotFoundException e) {
