@@ -5,8 +5,8 @@ package fr.inria.coast.general;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 /**
@@ -25,10 +25,8 @@ public class Helper {
 		String line;
 		BufferedReader expBufferedReader = null;
 		try {
-		File lastExpFile = new File(Helper.class.getResource("/"+lastExpFileName).toURI());
-		FileReader expFileReader = new FileReader(lastExpFile);
-		expBufferedReader = new BufferedReader(expFileReader);
-
+			InputStreamReader s = new InputStreamReader(Helper.class.getResourceAsStream("/"+lastExpFileName));
+			expBufferedReader = new BufferedReader(s);
 		
 			while ((line = expBufferedReader.readLine()) != null) {
 				String[] lines = line.split(" ");
@@ -75,12 +73,10 @@ public class Helper {
 	 * load number of users
 	 */
 	public static int[] loadNumUsers(String fileName) throws IOException {
-		File file;
 		BufferedReader bufferedReader = null;
 		try {
-			file = new File(Helper.class.getResource("/"+fileName).toURI());
-			FileReader fileReader = new FileReader(file);
-			bufferedReader = new BufferedReader(fileReader);
+			InputStreamReader s = new InputStreamReader(Helper.class.getResourceAsStream("/"+fileName));
+			bufferedReader = new BufferedReader(s);
 			String line;
 			if ((line = bufferedReader.readLine()) != null) {
 				String[] tmp_res = line.split(" ");

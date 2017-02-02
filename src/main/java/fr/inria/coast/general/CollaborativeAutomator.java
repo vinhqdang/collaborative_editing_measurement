@@ -1,9 +1,8 @@
 package fr.inria.coast.general;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class CollaborativeAutomator {
 	public static String resultFile = "result.txt";
@@ -47,7 +46,6 @@ public class CollaborativeAutomator {
 		try {
 			this.readConfigFile("selenium_config.txt");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Error when reading the config file.");
 		}
 		this.n_user = n_user;
@@ -96,7 +94,6 @@ public class CollaborativeAutomator {
 		try {
 			reader.join(120000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Interrupted while waiting the reader finish");
 			e.printStackTrace();
 			//if reader stops, finish all other thread and start a new loop
@@ -133,17 +130,15 @@ public class CollaborativeAutomator {
 	public void readConfigFile (String configFileName) throws IOException {
 		//read the settings from file
 		String configLine;
-		FileReader configReader;
-		File config_file;
 		int numOfLines = 1024;
 		String[] remoteAddressesTmp = new String [numOfLines];
 		int[] remoteThreadsTmp = new int [numOfLines];
 		BufferedReader configBufferedReader = null;
 		int count = 0;
 		try {
-			config_file = new File (this.getClass().getResource("/"+configFileName).toURI());
-			configReader = new FileReader (config_file);
-			configBufferedReader = new BufferedReader(configReader);
+
+			InputStreamReader s = new InputStreamReader(Helper.class.getResourceAsStream("/"+configFileName));
+			configBufferedReader = new BufferedReader(s);
 	
 			
 			remoteAddresses = new String [numOfLines];
