@@ -26,7 +26,7 @@ public class FormicReader extends CollaborativeReader {
 		LOG.info("Starting reader");
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(90, TimeUnit.SECONDS);
 		LOG.info("Opening Webpage");
 		driver.get(docUrl);
 		createNewFormicString();

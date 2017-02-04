@@ -24,7 +24,7 @@ public class FormicDummyWriter extends CollaborativeDummyWriter {
 		this.driver = new ChromeDriver();
 		LOG.info("Dummy opening webpage");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(90, TimeUnit.SECONDS);
 		driver.get(docUrl);
 		subscribeForFormicString(formicStringId);
 		this.inputElement = driver.findElement(By.className("stringInput"));

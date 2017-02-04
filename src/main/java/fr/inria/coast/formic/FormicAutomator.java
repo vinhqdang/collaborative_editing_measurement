@@ -61,6 +61,7 @@ public class FormicAutomator extends CollaborativeAutomator {
 
 			if (n_user > threshold) {
 				for (int i = 0; i < n_user - threshold; i++) {
+					Logger.getLogger(getClass().getName()).info("Remote Nr. " + i);
 					remoteDummies[i].start();
 				}
 			}
@@ -101,7 +102,7 @@ public class FormicAutomator extends CollaborativeAutomator {
 		Logger.getLogger(this.getClass().getName()).info("Stopping writer");
 		//stop dummy threads if needed
 		if (n_user > 1) {
-			for (int i = 0; i < n_user - 1; i++) {
+			for (int i = 0; i < n_LocalThread - 1; i++) {
 				dummies [i].cancel();
 			}
 			if (n_user > threshold) {

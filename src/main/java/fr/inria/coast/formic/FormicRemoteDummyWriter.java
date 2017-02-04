@@ -27,22 +27,25 @@ public class FormicRemoteDummyWriter extends CollaborativeRemoteDummyWriter {
 			String docUrl, int exp_id, String serverAddr, String formicStringId) {
 		super(n_user, type_spd, docUrl, exp_id, serverAddr);
 		try {
+			LOG.info("Starting remote writer");
 			this.remoteDriver = new RemoteWebDriver(new URL ("http://" + serverAddr + ":4444/wd/hub"), capabilities);
 		} catch (MalformedURLException e) {
 			System.out.println("Cannot get remoted web driver at URL: " + serverAddr);
 		}
 		
 		remoteDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+		remoteDriver.manage().timeouts().pageLoadTimeout(90, TimeUnit.SECONDS);
 		remoteDriver.get(docUrl);
 		subscribeForFormicString(formicStringId);
-		this.inputElement = remoteDriver.findElement(By.className("docs-texteventtarget-iframe"));
+		this.inputElement = remoteDriver.findElement(By.className("stringInput"));
 	}
 	
 	private void subscribeForFormicString(String formicStringId) {
-		WebElement subscribeInput = driver.findElement(By.id("subscribe-id"));
+		LOG.info("Remote writer subscribing for string");
+		WebElement subscribeInput = remoteDriver.findElement(By.id("subscribe-id"));
 		subscribeInput.sendKeys(formicStringId);
-		driver.findElement(By.id("subscribe-button")).click();
+		remoteDriver.findElement(By.id("subscribe-button")).click();
+		LOG.info("Remote writer subscribed for string");
 	}
 	
 	@Override

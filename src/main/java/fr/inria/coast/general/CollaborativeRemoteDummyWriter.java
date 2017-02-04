@@ -3,6 +3,8 @@
  */
 package fr.inria.coast.general;
 
+import java.util.logging.Logger;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionNotFoundException;
@@ -13,6 +15,8 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
  *
  */
 public class CollaborativeRemoteDummyWriter extends CollaborativeDummyWriter{
+	
+	protected static final Logger LOG = Logger.getLogger(CollaborativeRemoteDummyWriter.class.getName());
 	
 	//address of Selenium Server
 	protected String serverAddr;
@@ -33,6 +37,7 @@ public class CollaborativeRemoteDummyWriter extends CollaborativeDummyWriter{
 	
 	public void cancel () {
 		try {
+			LOG.info("Cancalling remote writer");
 			shouldWrite = false;
 			remoteDriver.quit ();
 		} catch (SessionNotFoundException e) {
