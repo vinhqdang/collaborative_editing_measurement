@@ -39,8 +39,8 @@ public class Main {
 						System.out.println("Skipping type speed " + type_spd);
 						continue;
 					}
-					// only test with type speed 1 with 40 and 50 users
-					if (usersThisRun >= 40 && type_spd != 1)
+					// only test with type speed 1 with > 40 users
+					if (usersThisRun > 40 && type_spd != 1)
 						continue;
 
 					// continue from last time
