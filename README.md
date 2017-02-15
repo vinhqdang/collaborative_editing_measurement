@@ -85,7 +85,7 @@ The result will be processed and stored at "final_output.txt" file.
   * Open R and move to the directory of the code
   * Run the following R code:
 ```R
-script(R_script.R)
+source("R_script.R")
 #if you want to visualize the result with number of user is 10 and typing speed is 6
 displayDelay ("final_output.txt",user=10,speed=6)
 ```
